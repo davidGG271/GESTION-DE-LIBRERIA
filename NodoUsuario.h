@@ -10,8 +10,8 @@ struct NodoU {
 	NodoU* siguente;
 };
 
-NodoU* agregarNodoUuario(Usuario u){
-	NodoU* nuevo = new NodoU{};
+NodoU* agregarNodoUsuario(Usuario u){
+	NodoU* nuevo = new NodoU();
 	nuevo->usuario = u;
 	nuevo->siguente = nullptr;
 	nuevo->anterior = nullptr;

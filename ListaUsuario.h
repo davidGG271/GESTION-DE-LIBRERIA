@@ -27,6 +27,7 @@ class ListaUsuario{
 				nodoNuevo->anterior=nullptr;
 				nodoNuevo->siguente=nullptr;
 				
+				
 			}else{
 				nodoNuevo->anterior = final;
 				final->siguente = nodoNuevo;
@@ -93,6 +94,7 @@ class ListaUsuario{
 				NodoU* aux = inicio;
 				
 				while(aux!=nullptr){
+					cout<<"bbaaa"<<endl;
 					if(aux->usuario.id==id){
 						existe = true;
 						return existe;
