@@ -2,7 +2,7 @@
 #define NODOUSU_H
 
 #include <iostream>
-#include "Usuario_h"
+#include "Usuario.h"
 
 struct NodoU {
 	Usuario usuario;

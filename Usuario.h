@@ -13,6 +13,6 @@ struct Usuario{
 	string correo;
 	string contrasenia;
 	string Preferencias;
-}
+};
 
 #endif

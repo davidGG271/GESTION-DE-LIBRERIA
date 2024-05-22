@@ -1,14 +1,11 @@
-#include <Libro_h>
-#include <Usuario_h>
+#include "Libro.h"
+#include "Usuario.h"
+#include "Listausuario.h"
 
 #include<iostream>
 
 using namespace std;
 
-struct NodoU {
-	Usuario usuario;
-	NodoU* siguente;
-};
 
 int main() {
 	NodoU* inicio;
@@ -16,11 +13,11 @@ int main() {
 	Usuario u;
 	Usuario u1;
 
-	u.contrasena = "123";
+	u.contrasenia = "123";
 	u.correo = "henry@usil.pe";
 
 	u1.correo = "javier@usil.pe";
-	u1.contrasena = "1234";
+	u1.contrasenia = "1234";
 
 
 

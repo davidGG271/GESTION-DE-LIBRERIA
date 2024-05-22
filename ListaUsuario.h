@@ -1,8 +1,8 @@
 #ifndef LISTAUSU_H
 #define LISTAUSU_H
 
-#include "Usuario_h"
-#include "NodoUsu_h"
+#include "Usuario.h"
+#include "NodoUsuario.h"
 #include <iostream>
 
 
@@ -13,7 +13,6 @@ class ListaUsuario{
 		NodoU* final;
 	
 	public:
-		ListaUsuario();
 		
 		ListaUsuario(){
 			inicio=nullptr;
@@ -31,7 +30,7 @@ class ListaUsuario{
 			}else{
 				nodoNuevo->anterior = final;
 				final->siguente = nodoNuevo;
-				fin = nodoNuevo;
+				final = nodoNuevo;
 				final->siguente=nullptr;
 			}
 		}
@@ -46,14 +45,14 @@ class ListaUsuario{
 			}
 			
 			if(inicio->usuario.id == id) {
-				NodoM* auxI = inicio;
-				inicio = inicio->der;
+				NodoU* auxI = inicio;
+				inicio = inicio->siguente;
 			
 				if (inicio != NULL)
 			        inicio->anterior = NULL;
 			
 			    delete auxI;
-			}else if(final->usuario.id==dni){
+			}else if(final->usuario.id==id){
 			  	NodoU* auxF = final;
 			  	final = final->anterior;
 			  	
