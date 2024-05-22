@@ -36,7 +36,7 @@ class ListaUsuario{
 			}
 		}
 		
-		void eliminar(int id){
+		void eliminar(string id){
 			if(inicio==nullptr){
 				cout<<"No hay usuarios registrados"<<endl;
 			}
@@ -85,8 +85,7 @@ class ListaUsuario{
 		}
 		
 		
-		
-		bool UsuarioExiste(int id){
+		bool UsuarioExiste(string id){
 			bool existe = false;
 			
 			if(inicio==nullptr){
@@ -105,8 +104,21 @@ class ListaUsuario{
 			return existe;
 		}
 		
-		
-		
+		NodoU* encontrarUsuario(string id){
+			if(inicio == nullptr){
+			    return nullptr;
+			}else{
+				NodoU *aux = inicio;
+			    while(aux != nullptr){
+					if(aux->usuario.id == id){
+				        return aux;
+			      	}
+			      aux = aux->siguente;
+			    }
+			  }
+			
+			  return nullptr;
+		}
 		
 	
 };
