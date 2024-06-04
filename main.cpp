@@ -4,6 +4,7 @@
 #include "NodoUsuario.h"
 #include "ListaLibro.h"
 #include "NodoLibro.h"
+#include "ISBNArbolDeLibros.h"
 
 #include <iostream>
 #include <string>
@@ -39,6 +40,7 @@ void mostrarMenuLibro() {
 int main() {
     ListaUsuario listaUsuarios;
     ListaLibro listaLibros;
+    ISBNArbolLibro isbnArbol;
     int opcion;
 
     do {
@@ -118,14 +120,18 @@ int main() {
 			                cout << endl;
 			                cout << "Ingrese ISBN del libro: ";
 			                cin >> nuevoLibro.isbn;
-			                cout << "Ingrese título del libro: ";
-			                cin >> nuevoLibro.titulo;
-			                // Aquí continuarías solicitando la información restante del libro
-			                
-			                NodoL* nodoNuevoLibro = agregarNodoLibro(nuevoLibro);
-			                listaLibros.agregar(nodoNuevoLibro);
-			                cout << "Libro agregado " << endl;
-			                cout << endl;
+			                if (isbnArbol.buscar(nuevoLibro.isbn)) {
+                                cout << "Error: El ISBN ya existe en la lista." << endl;
+                            } else {
+                                cout << "Ingrese título del libro: ";
+                                cin >> nuevoLibro.titulo;
+                                // Aquí continuarías solicitando la información restante del libro
+                                NodoL* nodoNuevoLibro = agregarNodoLibro(nuevoLibro);
+                                listaLibros.agregar(nodoNuevoLibro);
+                                isbnArbol.insertar(nuevoLibro.isbn);
+                                cout << "Libro agregado " << endl;
+                                cout << endl;
+                            }
 			                break;
 			            }
 			            case 2: { // Eliminar Libro
