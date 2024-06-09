@@ -12,7 +12,7 @@ Struct Prestamo {
 	string fechaDevolucion;
 	string fechaSalida;
 	vector<Libro> libros;
-	string persona; //cambiar struct persona
+	string IdUsuario; //cambiar struct persona
 }
 
 #endif

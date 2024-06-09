@@ -162,6 +162,25 @@ public:
 	    // if we reach here, then element was not present
 	    return nullptr;
 	}
+	
+	//NUEVO
+	/*vector<Libro> buscarLibrosPorCategoria(const string& categoria) const {
+		NodoL* actual = inicio;
+		vector<Libro> libros;
+		
+		while(actual!=nullptr){
+			
+			for(const string a : actual->libro.generos){
+				if(categoria==a){
+					libros.push_back(actual->libro);
+					break;
+				}
+			}
+			actual = actual->siguiente;
+		}
+		return libros;
+	}*/
+	
 };
 
 #endif
