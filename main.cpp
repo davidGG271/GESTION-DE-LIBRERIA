@@ -5,6 +5,7 @@
 #include "ListaLibro.h"
 #include "NodoLibro.h"
 #include "ISBNArbolDeLibros.h"
+#include "funcionesPrestamo.h"
 
 #include <iostream>
 #include <string>
@@ -15,8 +16,9 @@ void mostrarMenuPrincipal() {
     cout << "Menu Principal:" << endl;
     cout << "1. Trabajar con Usuarios" << endl;
     cout << "2. Trabajar con Libros" << endl;
-    cout << "3. Salir" << endl;
-    cout << "Seleccione una opción: ";
+    cout << "3. Prestamos" << endl;
+    cout << "4. Salir" << endl;
+    cout << "Seleccione una opciï¿½n: ";
 }
 
 void mostrarMenuUsuario() {
@@ -25,7 +27,7 @@ void mostrarMenuUsuario() {
     cout << "2. Eliminar Usuario" << endl;
     cout << "3. Buscar Usuario" << endl;
     cout << "4. Volver al Menu Principal" << endl;
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opciï¿½n: ";
 }
 
 void mostrarMenuLibro() {
@@ -34,12 +36,23 @@ void mostrarMenuLibro() {
     cout << "2. Eliminar Libro" << endl;
     cout << "3. Buscar Libro" << endl;
     cout << "4. Volver al Menu Principal" << endl;
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opciï¿½n: ";
+}
+
+void mostrarMenuPrestamo() {
+    cout << "Menu Prestamos:" << endl;
+    cout << "1. Agregar Prestamo" << endl;
+    cout << "2. Eliminar Prestamo" << endl;
+    cout << "3. Buscar Prestamo" << endl;
+    cout << "4. Establecer fecha de entrega prestamo"<<endl;
+    cout << "5. Volver al Menu Principal" << endl;
+    cout << "Seleccione una opciï¿½n: ";
 }
 
 int main() {
     ListaUsuario listaUsuarios;
     ListaLibro listaLibros;
+    ListaPrestamo listaPrestamo;
     ISBNArbolLibro isbnArbol;
     int opcion;
 
@@ -123,9 +136,9 @@ int main() {
 			                if (isbnArbol.buscar(nuevoLibro.isbn)) {
                                 cout << "Error: El ISBN ya existe en la lista." << endl;
                             } else {
-                                cout << "Ingrese título del libro: ";
+                                cout << "Ingrese tï¿½tulo del libro: ";
                                 cin >> nuevoLibro.titulo;
-                                // Aquí continuarías solicitando la información restante del libro
+                                // Aquï¿½ continuarï¿½as solicitando la informaciï¿½n restante del libro
                                 NodoL* nodoNuevoLibro = agregarNodoLibro(nuevoLibro);
                                 listaLibros.agregar(nodoNuevoLibro);
                                 isbnArbol.insertar(nuevoLibro.isbn);
@@ -153,8 +166,8 @@ int main() {
 			                if (libro != nullptr) {
 			                    cout << "Libro encontrado:" << endl;
 			                    cout << "ISBN: " << libro->libro.isbn << endl;
-			                    cout << "Título: " << libro->libro.titulo << endl;
-			                    // Aquí imprimirías el resto de la información del libro
+			                    cout << "Tï¿½tulo: " << libro->libro.titulo << endl;
+			                    // Aquï¿½ imprimirï¿½as el resto de la informaciï¿½n del libro
 			                } else {
 			                    cout << "Libro no encontrado." << endl;
 			                }
@@ -168,9 +181,39 @@ int main() {
 			        }
 			    } while (opcionLibro != 4);
 			    break;
+			case 3:
+				int opcionPrestamo;
+				do{
+                    system("cls");
+                    mostrarMenuPrestamo();
+                    cin >> opcionPrestamo;
+					switch(opcionPrestamo){
+                        case 1:
+                            agregarNuevoPrestamo(listaUsuarios, listaLibros, listaPrestamo);
+                            break;
+                        case 2:
+                            eliminarPrestamo(listaPrestamo);
+                            break;
+                        case 3:
+                            buscarPrestamo(listaPrestamo);
+                            break;
+                        case 4:
+                            establecerFechaEntrega(listaPrestamo);
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            cout << "Opcion invalida.";
+                    }
+
+				} while (opcionPrestamo != 5);
+				break;
+			
+			
         	}
         }
-    } while (opcion != 3);
+        
+    } while (opcion != 4);
 
     return 0;
 }

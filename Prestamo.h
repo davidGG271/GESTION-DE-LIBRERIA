@@ -1,18 +1,19 @@
 #ifndef Prestamo_h
 #define Prestamo_h
 
-#include <Libro_h>
+#include "Libro.h"
+#include "Usuario.h"
 #include <vector>
 #include <iostream>
 
 using namespace std;
 
-Struct Prestamo {
+struct Prestamo {
 	string id;
 	string fechaDevolucion;
 	string fechaSalida;
 	vector<Libro> libros;
-	string IdUsuario; //cambiar struct persona
-}
+	Usuario usuario;
+};
 
 #endif
