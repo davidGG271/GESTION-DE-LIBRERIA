@@ -1,3 +1,5 @@
+#ifndef ISBNARBOLDELIBROS_H
+#define ISBNARBOLDELIBROS_H
 
 #include <iostream>
 using namespace std;
@@ -60,3 +62,5 @@ class ISBNArbolLibro {
 	        }
 	    }
 };
+
+#endif // ISBNARBOLDELIBROS_H

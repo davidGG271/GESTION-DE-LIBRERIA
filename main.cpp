@@ -6,6 +6,7 @@
 #include "NodoLibro.h"
 #include "ISBNArbolDeLibros.h"
 #include "funcionesPrestamo.h"
+#include "funcionesLibro.h"
 
 #include <iostream>
 #include <string>
@@ -17,8 +18,9 @@ void mostrarMenuPrincipal() {
     cout << "1. Trabajar con Usuarios" << endl;
     cout << "2. Trabajar con Libros" << endl;
     cout << "3. Prestamos" << endl;
-    cout << "4. Salir" << endl;
-    cout << "Seleccione una opciï¿½n: ";
+    cout << "4. Visualizar Libros por Categorias" << endl;
+    cout << "5. Salir" << endl;
+    cout << "Seleccione una opcion: ";
 }
 
 void mostrarMenuUsuario() {
@@ -48,6 +50,7 @@ void mostrarMenuPrestamo() {
     cout << "5. Volver al Menu Principal" << endl;
     cout << "Seleccione una opciï¿½n: ";
 }
+
 
 int main() {
     ListaUsuario listaUsuarios;
@@ -124,55 +127,22 @@ int main() {
             case 2: { // Trabajar con Libros
 			    int opcionLibro;
 			    do {
+			    	system("cls");
 			        mostrarMenuLibro();
 			        cin >> opcionLibro;
 			
 			        switch (opcionLibro) {
 			            case 1: { // Agregar Libro
-			                Libro nuevoLibro;
-			                cout << endl;
-			                cout << "Ingrese ISBN del libro: ";
-			                cin >> nuevoLibro.isbn;
-			                if (isbnArbol.buscar(nuevoLibro.isbn)) {
-                                cout << "Error: El ISBN ya existe en la lista." << endl;
-                            } else {
-                                cout << "Ingrese tï¿½tulo del libro: ";
-                                cin >> nuevoLibro.titulo;
-                                // Aquï¿½ continuarï¿½as solicitando la informaciï¿½n restante del libro
-                                NodoL* nodoNuevoLibro = agregarNodoLibro(nuevoLibro);
-                                listaLibros.agregar(nodoNuevoLibro);
-                                isbnArbol.insertar(nuevoLibro.isbn);
-                                cout << "Libro agregado " << endl;
-                                cout << endl;
-                            }
-			                break;
+			                agregarNuevoLibro(listaLibros, isbnArbol);
+                            break;
 			            }
 			            case 2: { // Eliminar Libro
-			                string isbn;
-			                cout << endl;
-			                cout << "Ingrese ISBN del libro: ";
-			                cin >> isbn;
-			                listaLibros.eliminar(isbn);
-			                cout << "LIBRO ELIMINADO CORRECTAMENTE " << endl;
-			                cout << endl;
-			                break;
+			                eliminarLibro(listaLibros);
+                            break;
 			            }
 			            case 3: { // Buscar Libro
-			                string isbn;
-			                cout << endl;
-			                cout << "Ingrese ISBN del libro a buscar: ";
-			                cin >> isbn;
-			                NodoL* libro = listaLibros.encontrarLibro(isbn);
-			                if (libro != nullptr) {
-			                    cout << "Libro encontrado:" << endl;
-			                    cout << "ISBN: " << libro->libro.isbn << endl;
-			                    cout << "Tï¿½tulo: " << libro->libro.titulo << endl;
-			                    // Aquï¿½ imprimirï¿½as el resto de la informaciï¿½n del libro
-			                } else {
-			                    cout << "Libro no encontrado." << endl;
-			                }
-			                cout << endl;
-			                break;
+			                buscarLibro(listaLibros);
+                            break;
 			            }
 			            case 4: // Volver al Menu Principal
 			                break;
@@ -181,7 +151,8 @@ int main() {
 			        }
 			    } while (opcionLibro != 4);
 			    break;
-			case 3:
+			}
+			case 3: {
 				int opcionPrestamo;
 				do{
                     system("cls");
@@ -208,12 +179,20 @@ int main() {
 
 				} while (opcionPrestamo != 5);
 				break;
-			
-			
         	}
+        	case 4: { // Visualizar Libros por Categorías
+                mostrarCategorias(listaLibros);
+                break;
+            }
+            case 5: { // Salir
+                cout << "Saliendo..." << endl;
+                break;
+            }
+            default:
+                cout << "Opción inválida." << endl;
         }
         
-    } while (opcion != 4);
+    } while (opcion != 5);
 
     return 0;
 }

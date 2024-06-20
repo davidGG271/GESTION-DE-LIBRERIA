@@ -4,6 +4,9 @@
 #include "Libro.h"
 #include "NodoLibro.h"
 #include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -163,23 +166,35 @@ public:
 	    return nullptr;
 	}
 	
-	//NUEVO
-	/*vector<Libro> buscarLibrosPorCategoria(const string& categoria) const {
-		NodoL* actual = inicio;
-		vector<Libro> libros;
-		
-		while(actual!=nullptr){
-			
-			for(const string a : actual->libro.generos){
-				if(categoria==a){
-					libros.push_back(actual->libro);
-					break;
-				}
-			}
-			actual = actual->siguiente;
-		}
-		return libros;
-	}*/
+	vector<Libro> filtrarPorCategoria(const string& categoria) {
+        vector<Libro> librosCategoria;
+        NodoL* aux = inicio;
+        while (aux != nullptr) {
+            if (aux->libro.genero == categoria) {
+                librosCategoria.push_back(aux->libro);
+            }
+            aux = aux->siguiente;
+        }
+        sort(librosCategoria.begin(), librosCategoria.end(), [](const Libro& a, const Libro& b) {
+            return a.titulo < b.titulo;
+        });
+        return librosCategoria;
+    }
+    
+    vector<string> obtenerCategorias() {
+        map<string, bool> categorias;
+        NodoL* aux = inicio;
+        while (aux != nullptr) {
+            categorias[aux->libro.genero] = true;
+            aux = aux->siguiente;
+        }
+        vector<string> listaCategorias;
+        for (const auto& categoria : categorias) {
+            listaCategorias.push_back(categoria.first);
+        }
+        return listaCategorias;
+    }
+	
 	
 };
 
