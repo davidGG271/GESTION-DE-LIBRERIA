@@ -71,7 +71,7 @@ void agregarNuevoPrestamo(ListaUsuario listaUsuario, ListaLibro listaLibro, List
     } while(isbn != "0");
     prestamo.usuario = usuario;
     prestamo.fechaSalida = obtenerFechaActual();
-    listaPrestamo.agregar(prestamo);
+    listaPrestamo.agregar(prestamo);    
 
 }
 

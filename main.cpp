@@ -1,7 +1,6 @@
 #include "Libro.h"
 #include "Usuario.h"
 #include "ListaUsuario.h"
-#include "NodoUsuario.h"
 #include "ListaLibro.h"
 #include "NodoLibro.h"
 #include "ISBNArbolDeLibros.h"
@@ -48,7 +47,7 @@ void mostrarMenuPrestamo() {
     cout << "3. Buscar Prestamo" << endl;
     cout << "4. Establecer fecha de entrega prestamo"<<endl;
     cout << "5. Volver al Menu Principal" << endl;
-    cout << "6. Trabajar como admin"
+    cout << "6. Trabajar como admin";
     cout << "Seleccione una opci�n: ";
 }
 
@@ -87,8 +86,7 @@ int main() {
                             cout << "Ingrese contrasenia del usuario: ";
                             cin >> nuevoUsuario.contrasenia;
 
-                            NodoU* nodoNuevo = new NodoU(nuevoUsuario);
-                            listaUsuarios.agregar(nodoNuevo);
+                            listaUsuarios.agregar(nuevoUsuario);
                             cout << "Usuario agregado " << endl;
                             cout << endl;
                             break;
