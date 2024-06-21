@@ -5,9 +5,12 @@
 #include "NodoLibro.h"
 #include "ArbolUsuario.h"
 
+#include "FuncionesAdmin.h"
+#include "FuncionInicio.h"
 #include "Administrador.h"
 //#include "Li"
 
+#include <string>
 
 #include <iostream>
 
@@ -18,9 +21,7 @@ using namespace std;
 
 void mostrarInicio();
 void inicioSesion();
-void registrarse();
-int adminIniciarSesion();
-int paginaPrincipalAdmin(Administrador admin);
+void adminIniciarSesion();
 int usuarioIniciarSesion();
 
 Administrador admin;
@@ -71,7 +72,7 @@ int main(){
 	
 	admin.id = 1;
 	admin.nombre = "henry";
-	admin.correo = "henryhuaman@hotmail.com";
+	admin.correo = "henry@hotmail.com";
 	admin.contrasenia = "abc";
 	
 	mostrarInicio();
@@ -79,46 +80,51 @@ int main(){
 }
 
 void mostrarInicio(){
+	int opcion;
+	do{
 	cout << "\nBienvenido a la Biblioteca\n";
     cout << "1. Iniciar Sesión\n";
     cout << "2. Registrarse\n";
     cout << "3. Salir\n";
     cout << "Seleccione una opción: ";
-    int opcion;
+    
     cin >> opcion;
-    do{
+    
     	switch (opcion) {
             case 1:
             	system("cls");
                 inicioSesion();
                 break;
             case 2:
-                registrarse();
+                registrarse(listaUsuario);
                 break;
             case 3:
                 cout << "Saliendo...\n";
                 break;
             default:
                 cout << "Opción no válida, intente nuevamente.\n";
+                break;
         }
     } while (opcion != 3);
     	
 }
 
 void inicioSesion(){
+	bool b = true;
+    int opcion;
+	do{
 	cout << "\nElegir tipo de usuario\n";
     cout << "1. Administrador\n";
     cout << "2. Usuario\n";
     cout << "3. Atras\n";
     cout << "Seleccione una opción: "	;
-    bool b = true;
-    int opcion;
+    
     cin >> opcion;
-    do{
+    
     	switch (opcion) {
             case 1:
             	system("cls");
-                opcion = adminIniciarSesion();
+                adminIniciarSesion();
 				
                 break;
             case 2:
@@ -135,88 +141,28 @@ void inicioSesion(){
     
 }
 
-void registrarse(){
-	
-}
 
-int adminIniciarSesion(){
+void adminIniciarSesion(){
 	string correo = "";
 	
 	string contrasenia = "";
 	cout<<"Ingese su correo: ";
 	cin>>correo;
 	if(correo=="-1"){
-		return 3;
+		return;
 	}
 	cout<<"Ingrese su contraseña: ";
 	cin>>contrasenia;
 	
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(admin);
-		return 1;
-	}else{
-		return 1;
+		paginaPrincipalAdmin(listaUsuario, admin);
+		return;
 	}
+	system("cls");
+	adminIniciarSesion();
 }
 
-int paginaPrincipalAdmin(Administrador admin){
-	cout<<"listo\n";
-	cout<<"Bienvenido "<<admin.nombre<<endl;
-	
-	cout<<"1. Gestionar libros\n";
-	cout<<"2. Gestionar Usuarios\n";
-	cout<<"3. Historial de prestamos\n";
-	
-	int opcion;
-	int opcion2;
-	cout<<"Ingrese la funcion a realizar: ";
-	cin>>opcion;
-	
-	do{
-		switch(opcion){
-			case 1:
-				
-				
-				break;
-			case 2:
-				system("cls");
-				
-				cout<<"1. Ordenar alfabeticamente\n";
-				cout<<"2. Ordenar por fecha de registro\n";
-				cout<<"3. Atras\n";
-				cout<<"Selecciona una opcion: ";
-				cin>>opcion2;
-				do{
-					switch(opcion2){
-						case 1:
-							//en proceso
-							break;
-						case 2:
-							//en proceso
-							break;	
-						case 3:
-							break;
-						default:
-							system("cls");
-							break;
-					}
-				}while(opcion2!=3);
-				
-				break;
-			case 3:
-				break;
-			case 4:
-				cout << "Saliendo...\n";
-				break;
-			default:
-				cout<<"Opción no válida, intente nuevamente.\n";
-				break;
-		}
-		
-	}while(opcion!=4);
-	
-}
 
 int usuarioIniciarSesion(){
 	string correo = "";

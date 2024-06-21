@@ -149,6 +149,7 @@ public:
         }
         archivo >> *this;
     }
+    
 };
 
 #endif
