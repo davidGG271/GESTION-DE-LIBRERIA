@@ -48,6 +48,7 @@ void mostrarMenuPrestamo() {
     cout << "3. Buscar Prestamo" << endl;
     cout << "4. Establecer fecha de entrega prestamo"<<endl;
     cout << "5. Volver al Menu Principal" << endl;
+    cout << "6. Trabajar como admin"
     cout << "Seleccione una opci�n: ";
 }
 

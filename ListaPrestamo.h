@@ -2,8 +2,13 @@
 #define LISTAPRESTAMO_H
 
 #include "Prestamo.h"
-#include "NodoPrestamo.h"
 #include <iostream>
+
+struct NodoP{
+    Prestamo prestamo;
+    NodoP* anterior;
+    NodoP* siguiente;
+};
 
 class ListaPrestamo{
     
@@ -18,13 +23,11 @@ class ListaPrestamo{
             final=nullptr;
         }
         
-        void agregar(NodoP* nodoNuevo){
-            
+        void agregar(Prestamo prestamo){
+            NodoP* nodoNuevo = new NodoP{prestamo,nullptr,nullptr};
             if(inicio==nullptr){
                 inicio = nodoNuevo;
                 final = nodoNuevo;
-                nodoNuevo->anterior=nullptr;
-                nodoNuevo->siguiente=nullptr;
             }else{
                 nodoNuevo->anterior = final;
                 final->siguiente = nodoNuevo;

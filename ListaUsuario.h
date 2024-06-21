@@ -2,9 +2,13 @@
 #define LISTAUSU_H
 
 #include "Usuario.h"
-#include "NodoUsuario.h"
 #include <iostream>
 
+struct NodoU {
+	Usuario usuario;
+	NodoU* anterior;
+	NodoU* siguente;
+};
 
 class ListaUsuario{
 	
@@ -19,14 +23,12 @@ class ListaUsuario{
 			final=nullptr;
 		}
 		
-		void agregar(NodoU* nodoNuevo){
-			
+		void agregar(Usuario usuario){
+			NodoU* nodoNuevo = new NodoU{usuario,nullptr,nullptr};
 			if(inicio==nullptr){
+				
 				inicio = nodoNuevo;
 				final = nodoNuevo;
-				nodoNuevo->anterior=nullptr;
-				nodoNuevo->siguente=nullptr;
-				
 				
 			}else{
 				nodoNuevo->anterior = final;
