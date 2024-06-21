@@ -1,9 +1,14 @@
 #ifndef LISTAPRESTAMO_H
 #define LISTAPRESTAMO_H
 
-#include "NodoPrestamo.h"
+#include "Prestamo.h"
 #include <iostream>
-#include <fstream>
+
+struct NodoP{
+    Prestamo prestamo;
+    NodoP* anterior;
+    NodoP* siguiente;
+};
 
 class ListaPrestamo {
     
