@@ -59,6 +59,9 @@ int main() {
     ISBNArbolLibro isbnArbol;
     int opcion;
 
+    //Cargar datos
+    listaUsuarios.cargarUsuarios();
+
     do {
         mostrarMenuPrincipal();
         cin >> opcion;
@@ -83,7 +86,7 @@ int main() {
                             cout << "Ingrese contrasenia del usuario: ";
                             cin >> nuevoUsuario.contrasenia;
 
-                            NodoU* nodoNuevo = agregarNodoUsuario(nuevoUsuario);
+                            NodoU* nodoNuevo = new NodoU(nuevoUsuario);
                             listaUsuarios.agregar(nodoNuevo);
                             cout << "Usuario agregado " << endl;
                             cout << endl;
@@ -180,16 +183,17 @@ int main() {
 				} while (opcionPrestamo != 5);
 				break;
         	}
-        	case 4: { // Visualizar Libros por Categorías
+        	case 4: { // Visualizar Libros por Categorï¿½as
                 mostrarCategorias(listaLibros);
                 break;
             }
             case 5: { // Salir
                 cout << "Saliendo..." << endl;
+                listaUsuarios.guardarUsuarios();
                 break;
             }
             default:
-                cout << "Opción inválida." << endl;
+                cout << "Opciï¿½n invï¿½lida." << endl;
         }
         
     } while (opcion != 5);

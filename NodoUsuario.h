@@ -8,15 +8,19 @@ struct NodoU {
 	Usuario usuario;
 	NodoU* anterior;
 	NodoU* siguente;
-};
 
-NodoU* agregarNodoUsuario(Usuario u){
-	NodoU* nuevo = new NodoU();
-	nuevo->usuario = u;
-	nuevo->siguente = nullptr;
-	nuevo->anterior = nullptr;
-	
-	return nuevo;
-}
+	NodoU(const Usuario& usuario) : usuario(usuario), anterior(nullptr), siguente(nullptr) {}
+
+
+	friend ostream& operator<<(ostream& os, const NodoU& nodo) {
+        os << nodo.usuario;
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, NodoU& nodo) {
+        is >> nodo.usuario;
+        return is;
+    }
+};
 
 #endif

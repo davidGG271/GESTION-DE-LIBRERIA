@@ -4,125 +4,188 @@
 #include "Usuario.h"
 #include "NodoUsuario.h"
 #include <iostream>
+#include <fstream>
 
+class ListaUsuario
+{
 
-class ListaUsuario{
-	
-	private:
-		NodoU* inicio;
-		NodoU* final;
-	
-	public:
-		
-		ListaUsuario(){
-			inicio=nullptr;
-			final=nullptr;
+private:
+	NodoU *inicio;
+	NodoU *final;
+
+public:
+	ListaUsuario()
+	{
+		inicio = nullptr;
+		final = nullptr;
+	}
+
+	void agregar(NodoU *nodoNuevo)
+	{
+
+		if (inicio == nullptr)
+		{
+			inicio = nodoNuevo;
+			final = nodoNuevo;
+			nodoNuevo->anterior = nullptr;
+			nodoNuevo->siguente = nullptr;
 		}
-		
-		void agregar(NodoU* nodoNuevo){
-			
-			if(inicio==nullptr){
-				inicio = nodoNuevo;
-				final = nodoNuevo;
-				nodoNuevo->anterior=nullptr;
-				nodoNuevo->siguente=nullptr;
-				
-				
-			}else{
-				nodoNuevo->anterior = final;
-				final->siguente = nodoNuevo;
-				final = nodoNuevo;
-				final->siguente=nullptr;
+		else
+		{
+			nodoNuevo->anterior = final;
+			final->siguente = nodoNuevo;
+			final = nodoNuevo;
+			final->siguente = nullptr;
+		}
+	}
+
+	void eliminar(string id)
+	{
+		if (inicio == nullptr)
+		{
+			cout << "No hay usuarios registrados" << endl;
+		}
+
+		if (!UsuarioExiste(id))
+		{
+			cout << "El usuario no existe" << endl;
+		}
+
+		if (inicio->usuario.id == id)
+		{
+			NodoU *auxI = inicio;
+			inicio = inicio->siguente;
+
+			if (inicio != NULL)
+				inicio->anterior = NULL;
+
+			delete auxI;
+		}
+		else if (final->usuario.id == id)
+		{
+			NodoU *auxF = final;
+			final = final->anterior;
+
+			if (final != nullptr)
+			{
+				final->siguente = nullptr;
+			}
+			delete auxF;
+		}
+		else
+		{
+			NodoU *aux = inicio;
+
+			while (aux != nullptr && aux->usuario.id != id)
+			{
+				aux = aux->siguente;
+			}
+
+			if (aux != nullptr)
+			{
+				NodoU *auxA = aux->anterior;
+				NodoU *auxS = aux->siguente;
+
+				auxA->siguente = auxS;
+
+				if (auxS != nullptr)
+				{
+					auxS->anterior = auxA;
+				}
+				delete aux;
+				cout << "\033[2J\033[1;1H";
+				cout << "Medico eliminado exitosamente!" << endl;
 			}
 		}
-		
-		void eliminar(string id){
-			if(inicio==nullptr){
-				cout<<"No hay usuarios registrados"<<endl;
-			}
-			
-			if(!UsuarioExiste(id)){
-				cout<<"El usuario no existe"<<endl;
-			}
-			
-			if(inicio->usuario.id == id) {
-				NodoU* auxI = inicio;
-				inicio = inicio->siguente;
-			
-				if (inicio != NULL)
-			        inicio->anterior = NULL;
-			
-			    delete auxI;
-			}else if(final->usuario.id==id){
-			  	NodoU* auxF = final;
-			  	final = final->anterior;
-			  	
-			  	if(final!=nullptr){
-			  		final->siguente = nullptr;	
-				}
-				delete auxF;
-			}else{
-				NodoU* aux = inicio;
-				
-				while(aux != nullptr && aux->usuario.id!=id){
-					aux=aux->siguente;
-				}
-				
-				if(aux!=nullptr){
-					NodoU* auxA = aux->anterior;
-					NodoU* auxS = aux->siguente;
-					
-					auxA->siguente = auxS;
-					
-					if(auxS!=nullptr){
-						auxS->anterior = auxA;
-					}
-					delete aux;
-					cout << "\033[2J\033[1;1H";
-      				cout << "Medico eliminado exitosamente!" << endl;
-				}
-			}
-		}
-		
-		
-		bool UsuarioExiste(string id){
-			bool existe = false;
-			
-			if(inicio==nullptr){
-				return existe;
-			}else{
-				NodoU* aux = inicio;
-				
-				while(aux!=nullptr){
-					cout<<"bbaaa"<<endl;
-					if(aux->usuario.id==id){
-						existe = true;
-						return existe;
-					}
-					aux = aux->siguente;
-				}
-			}
+	}
+
+	bool UsuarioExiste(string id)
+	{
+		bool existe = false;
+
+		if (inicio == nullptr)
+		{
 			return existe;
 		}
-		
-		NodoU* encontrarUsuario(string id){
-			if(inicio == nullptr){
-			    return nullptr;
-			}else{
-				NodoU *aux = inicio;
-			    while(aux != nullptr){
-					if(aux->usuario.id == id){
-				        return aux;
-			      	}
-			      aux = aux->siguente;
-			    }
-			  }
-			
-			  return nullptr;
+		else
+		{
+			NodoU *aux = inicio;
+
+			while (aux != nullptr)
+			{
+				cout << "bbaaa" << endl;
+				if (aux->usuario.id == id)
+				{
+					existe = true;
+					return existe;
+				}
+				aux = aux->siguente;
+			}
 		}
-		
-	
+		return existe;
+	}
+
+	NodoU *encontrarUsuario(string id)
+	{
+		if (inicio == nullptr)
+		{
+			return nullptr;
+		}
+		else
+		{
+			NodoU *aux = inicio;
+			while (aux != nullptr)
+			{
+				if (aux->usuario.id == id)
+				{
+					return aux;
+				}
+				aux = aux->siguente;
+			}
+		}
+
+		return nullptr;
+	}
+
+	friend ostream& operator<<(ostream& os, const ListaUsuario& lista) {
+        NodoU* aux = lista.inicio;
+        while (aux != nullptr) {
+            os << aux->usuario << '\n';
+            aux = aux->siguente;
+        }
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, ListaUsuario& lista) {
+        Usuario usuario;
+        while (is >> usuario) {
+            NodoU* nodo = new NodoU(usuario);
+            lista.agregar(nodo);
+        }
+        return is;
+    }
+
+	void guardarUsuarios()
+	{
+		ofstream archivo("usuarios.txt");
+		if (archivo.fail())
+		{
+			cout << "No se puede abrir el archivo.\n";
+			return;
+		}
+		archivo << *this; // Usar la sobrecarga del operador <<
+	}
+
+	void cargarUsuarios()
+	{
+		ifstream archivo("usuarios.txt");
+		if (archivo.fail())
+		{
+			cout << "No se puede abrir el archivo.\n";
+			return;
+		}
+		archivo >> *this; // Usar la sobrecarga del operador >>
+	}
 };
 
 #endif
-
