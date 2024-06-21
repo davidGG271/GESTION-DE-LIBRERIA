@@ -2,12 +2,14 @@
 #define FUNCIONINICIO_H
 
 #include <iostream>
+#include <string>
 #include "Usuario.h"
 #include "ListaUsuario.h"
 
+
 using namespace std;
 
-void registrarse(ListaUsuario lista);
+void registrarse(ListaUsuario& lista);
 int asingnarIdUsuario(ListaUsuario lista);
 
 #endif
@@ -16,8 +18,6 @@ int asingnarIdUsuario(ListaUsuario lista);
 void registrarse(ListaUsuario& listaUsuarios){
 	Usuario nuevoUsuario;
     cout << endl;
-    cout << "Ingrese ID del usuario: ";
-    cin >> nuevoUsuario.id;
     cout << "Ingrese nombre del usuario: ";
     cin >> nuevoUsuario.nombres;
    	cout << "Ingrese correo del usuario: ";
@@ -25,8 +25,9 @@ void registrarse(ListaUsuario& listaUsuarios){
     cout << "Ingrese contrasenia del usuario: ";
 	cin >> nuevoUsuario.contrasenia;
 	
-    NodoU* nodoNuevo = agregarNodoUsuario(nuevoUsuario);
-	listaUsuarios.agregar(nodoNuevo);
+	nuevoUsuario.id = to_string(asingnarIdUsuario(listaUsuarios));
+	
+	listaUsuarios.agregar(nuevoUsuario);
     cout << "Usuario agregado " << endl;
     cout << endl;
 }

@@ -19,12 +19,11 @@ private:
 public:
     ListaPrestamo() : inicio(nullptr), final(nullptr) {}
 
-    void agregar(NodoP* nodoNuevo) {
+    void agregar(Prestamo prestamo) {
+    	NodoP* nodoNuevo = new NodoP{prestamo,nullptr,nullptr};
         if (inicio == nullptr) {
             inicio = nodoNuevo;
             final = nodoNuevo;
-            nodoNuevo->anterior = nullptr;
-            nodoNuevo->siguiente = nullptr;
         } else {
             nodoNuevo->anterior = final;
             final->siguiente = nodoNuevo;
@@ -105,7 +104,7 @@ public:
         }
         return nullptr;
     }
-
+	
     friend ostream& operator<<(ostream& os, const ListaPrestamo& lista) {
         NodoP* aux = lista.inicio;
         while (aux != nullptr) {
@@ -142,6 +141,7 @@ public:
         }
         archivo >> *this; // Usar la sobrecarga del operador >>
     }
+    
 };
 
 #endif

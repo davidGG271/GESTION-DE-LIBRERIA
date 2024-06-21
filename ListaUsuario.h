@@ -88,7 +88,7 @@ class ListaUsuario{
 		}
 		
 		
-		bool UsuarioExiste(string id){
+		bool UsuarioExiste(string id){	
 			bool existe = false;
 			
 			if(inicio==nullptr){
@@ -122,6 +122,16 @@ class ListaUsuario{
 			  }
 			
 			  return nullptr;
+		}
+		
+		int getLongitud(){
+			NodoU* actual = inicio;
+			int i = 0;
+			while(actual!=nullptr){
+				actual= actual->siguente;
+				i++;
+			}
+			return i;
 		}
 		
 	
