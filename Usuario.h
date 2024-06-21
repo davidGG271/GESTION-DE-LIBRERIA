@@ -14,7 +14,7 @@ struct Preferencia {
 struct Usuario{
 	string usuario;
 	string nombres;
-	string id;
+	int id;
 	string correo;
 	string contrasenia;
 	vector<Preferencia> preferencias;

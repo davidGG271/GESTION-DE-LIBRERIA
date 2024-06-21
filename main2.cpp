@@ -136,8 +136,9 @@ void inicioSesion(){
 }
 
 void registrarse(){
-	
+
 }
+
 
 int adminIniciarSesion(){
 	string correo = "";
