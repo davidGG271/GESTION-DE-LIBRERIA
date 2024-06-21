@@ -4,23 +4,34 @@
 #include "Prestamo.h"
 #include <iostream>
 
-struct NodoP{
+struct NodoP {
     Prestamo prestamo;
     NodoP* anterior;
     NodoP* siguiente;
+
+    NodoP(const Prestamo& prestamo) : prestamo(prestamo), anterior(nullptr), siguiente(nullptr) {}
+
+    friend std::ostream& operator<<(std::ostream& os, const NodoP& nodo) {
+        os << nodo.prestamo;
+        return os;
+    }
+
+    friend std::istream& operator>>(std::istream& is, NodoP& nodo) {
+        is >> nodo.prestamo;
+        return is;
+    }
 };
 
 class ListaPrestamo {
-    
 private:
     NodoP* inicio;
     NodoP* final;
-    
+
 public:
     ListaPrestamo() : inicio(nullptr), final(nullptr) {}
 
     void agregar(Prestamo prestamo) {
-    	NodoP* nodoNuevo = new NodoP{prestamo,nullptr,nullptr};
+        NodoP* nodoNuevo = new NodoP(prestamo);
         if (inicio == nullptr) {
             inicio = nodoNuevo;
             final = nodoNuevo;
@@ -28,26 +39,25 @@ public:
             nodoNuevo->anterior = final;
             final->siguiente = nodoNuevo;
             final = nodoNuevo;
-            final->siguiente = nullptr;
         }
     }
 
-    void eliminar(string id) {
+    void eliminar(std::string id) {
         if (inicio == nullptr) {
-            cout << "No hay préstamos registrados" << endl;
+            std::cout << "No hay préstamos registrados" << std::endl;
             return;
         }
 
         if (!PrestamoExiste(id)) {
-            cout << "El préstamo no existe" << endl;
+            std::cout << "El préstamo no existe" << std::endl;
             return;
         }
 
         if (inicio->prestamo.id == id) {
             NodoP* auxI = inicio;
             inicio = inicio->siguiente;
-            if (inicio != NULL) {
-                inicio->anterior = NULL;
+            if (inicio != nullptr) {
+                inicio->anterior = nullptr;
             }
             delete auxI;
         } else if (final->prestamo.id == id) {
@@ -70,12 +80,12 @@ public:
                     auxS->anterior = auxA;
                 }
                 delete aux;
-                cout << "Préstamo eliminado exitosamente!" << endl;
+                std::cout << "Préstamo eliminado exitosamente!" << std::endl;
             }
         }
     }
 
-    bool PrestamoExiste(string id) {
+    bool PrestamoExiste(std::string id) {
         if (inicio == nullptr) {
             return false;
         } else {
@@ -90,7 +100,7 @@ public:
         return false;
     }
 
-    NodoP* encontrarPrestamo(string id) {
+    NodoP* encontrarPrestamo(std::string id) {
         if (inicio == nullptr) {
             return nullptr;
         } else {
@@ -104,8 +114,8 @@ public:
         }
         return nullptr;
     }
-	
-    friend ostream& operator<<(ostream& os, const ListaPrestamo& lista) {
+
+    friend std::ostream& operator<<(std::ostream& os, const ListaPrestamo& lista) {
         NodoP* aux = lista.inicio;
         while (aux != nullptr) {
             os << aux->prestamo << '\n';
@@ -114,32 +124,30 @@ public:
         return os;
     }
 
-    friend istream& operator>>(istream& is, ListaPrestamo& lista) {
+    friend std::istream& operator>>(std::istream& is, ListaPrestamo& lista) {
         Prestamo prestamo;
         while (is >> prestamo) {
-            NodoP* nodo = new NodoP();
-            nodo->prestamo = prestamo;
-            lista.agregar(nodo);
+            lista.agregar(prestamo);
         }
         return is;
     }
 
     void guardarPrestamos() {
-        ofstream archivo("prestamos.txt");
+        std::ofstream archivo("prestamos.txt");
         if (archivo.fail()) {
-            cout << "No se puede abrir el archivo.\n";
+            std::cout << "No se puede abrir el archivo.\n";
             return;
         }
-        archivo << *this; // Usar la sobrecarga del operador <<
+        archivo << *this;
     }
 
     void cargarPrestamos() {
-        ifstream archivo("prestamos.txt");
+        std::ifstream archivo("prestamos.txt");
         if (archivo.fail()) {
-            cout << "No se puede abrir el archivo.\n";
+            std::cout << "No se puede abrir el archivo.\n";
             return;
         }
-        archivo >> *this; // Usar la sobrecarga del operador >>
+        archivo >> *this;
     }
     
 };
