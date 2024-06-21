@@ -3,6 +3,7 @@
 
 #include "Usuario.h"
 #include <iostream>
+#include <fstream>
 
 struct NodoU {
 	Usuario usuario;
@@ -127,4 +128,3 @@ class ListaUsuario{
 };
 
 #endif
-

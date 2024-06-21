@@ -7,6 +7,16 @@ struct NodoL {
     Libro libro;
     NodoL* anterior;
     NodoL* siguiente;
+
+    friend ostream& operator<<(ostream& os, const NodoL& nodo) {
+        os << nodo.libro;
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, NodoL& nodo) {
+        is >> nodo.libro;
+        return is;
+    }
 };
 
 NodoL* agregarNodoLibro(Libro l) {

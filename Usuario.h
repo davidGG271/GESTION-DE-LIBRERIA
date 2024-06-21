@@ -18,6 +18,22 @@ struct Usuario{
 	string correo;
 	string contrasenia;
 	vector<Preferencia> preferencias;
+
+	 friend ostream& operator<<(ostream& os, const Usuario& usuario) {
+        os << usuario.id << '\n'
+           << usuario.nombres << '\n'
+           << usuario.correo << '\n'
+           << usuario.contrasenia << '\n';
+        return os;
+    }
+
+    friend istream& operator>>(istream& is, Usuario& usuario) {
+        getline(is, usuario.id);
+        getline(is, usuario.nombres);
+        getline(is, usuario.correo);
+        getline(is, usuario.contrasenia);
+        return is;
+    }
 };
 
 #endif
