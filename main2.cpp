@@ -72,7 +72,7 @@ int main(){
 	
 	admin.id = 1;
 	admin.nombre = "henry";
-	admin.correo = "henry@hotmail.com";
+	admin.correo = "henry";
 	admin.contrasenia = "abc";
 	
 	mostrarInicio();

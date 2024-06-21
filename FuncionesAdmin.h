@@ -10,10 +10,15 @@
 using namespace std;
 
 void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, Administrador& admin);
+void tabla(ListaUsuario& lista);
+string espaciar(int tamanio, int valor);
 
 #endif
 
 void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, Administrador& admin){
+	int opcion;
+	int opcion2;
+	do{
 	cout<<"listo\n";
 	cout<<"Bienvenido "<<admin.nombre<<endl;
 	
@@ -22,12 +27,11 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, Administrador& admin){
 	cout<<"3. Historial de prestamos\n";
 	cout<<"4. Cerrar sesion\n";
 	
-	int opcion;
-	int opcion2;
+	
 	cout<<"Ingrese la funcion a realizar: ";
 	cin>>opcion;
 	
-	do{
+	
 		switch(opcion){
 			case 1:
 				
@@ -35,13 +39,15 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, Administrador& admin){
 				break;
 			case 2:
 				system("cls");
+				tabla(listaUsuarios);
 				
-				cout<<"1. Ordenar alfabeticamente\n";
-				cout<<"2. Ordenar por fecha de registro\n";
+				do{
+				cout<<"1. Eliminar Usuario\n";
+				cout<<"2. Editar Usuario\n";
 				cout<<"3. Atras\n";
 				cout<<"Selecciona una opcion: ";
 				cin>>opcion2;
-				do{
+				
 					switch(opcion2){
 						case 1:
 							//en proceso
@@ -73,3 +79,44 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, Administrador& admin){
 	
 }
 
+
+string espaciar(int tamanio, int valor){
+	int espacio = 0;
+	string texto ="";
+	
+	espacio = valor - tamanio;
+	
+	for(int i = 0;i<espacio;i++){
+		texto =texto + " ";
+	}
+	return texto;
+}
+
+void tabla(ListaUsuario& lista){
+	system("color f9");
+	NodoU* u;
+	string preferencias="";
+	
+	cout<<"_________________________________________________________________________________________________________\n";
+	cout<<"ID                          NOMBRES                   CORREO                       PREFERENCIAS            ";
+	cout<<"_________________________________________________________________________________________________________\n";
+	
+	for(int i = 0; i<lista.getLongitud();i++){
+		u =lista.encontrarUsuario(to_string(i+1));
+		preferencias = "[ ";
+		if(u!=nullptr){
+			for(const auto p : u->usuario.preferencias){
+				preferencias = preferencias + p.tipo+", ";
+			}
+		preferencias = preferencias + "]";
+			cout<<u->usuario.id<<espaciar(2,26)<<u->usuario.nombres<<espaciar(u->usuario.nombres.size(),30)<<u->usuario.correo<<espaciar(u->usuario.correo.size(),40)<< preferencias<<"\n";
+		}else{
+			cout<<"no hay mas usuario";
+		}
+		
+	}
+	
+	
+	
+	
+}

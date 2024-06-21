@@ -5,7 +5,7 @@
 #include <string>
 #include "Usuario.h"
 #include "ListaUsuario.h"
-
+#include <limits> 
 
 using namespace std;
 
@@ -17,13 +17,15 @@ int asingnarIdUsuario(ListaUsuario lista);
 
 void registrarse(ListaUsuario& listaUsuarios){
 	Usuario nuevoUsuario;
-    cout << endl;
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cout << "Ingrese nombre del usuario: ";
-    cin >> nuevoUsuario.nombres;
-   	cout << "Ingrese correo del usuario: ";
-    cin >> nuevoUsuario.correo;
+    getline(cin, nuevoUsuario.nombres);
+
+    cout << "Ingrese correo del usuario: ";
+    getline(cin, nuevoUsuario.correo);
+
     cout << "Ingrese contrasenia del usuario: ";
-	cin >> nuevoUsuario.contrasenia;
+    getline(cin, nuevoUsuario.contrasenia);
 	
 	nuevoUsuario.id = to_string(asingnarIdUsuario(listaUsuarios));
 	
