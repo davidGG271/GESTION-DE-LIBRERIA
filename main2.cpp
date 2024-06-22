@@ -31,7 +31,9 @@ ArbolUsuario arbol;
 
 
 int main(){
-
+	
+	listaUsuario.cargarUsuarios();
+	listaUsuario.imprimir();
 	/*
 	Usuario u1;
 	Usuario u2;

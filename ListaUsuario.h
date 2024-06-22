@@ -171,7 +171,15 @@ public:
 				i++;
 			}
 			return i;
+	}
+	
+	void imprimir(){
+    	NodoU* actual = inicio;
+    	while(actual!=nullptr){
+    		cout<<actual->usuario.id;
+    		actual=actual->siguiente;
 		}
+	}
 	
 	friend std::ostream &operator<<(std::ostream &os, const ListaUsuario &lista)
 	{

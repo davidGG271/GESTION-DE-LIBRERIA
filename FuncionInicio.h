@@ -31,6 +31,7 @@ void registrarse(ListaUsuario& listaUsuarios){
 	
 	listaUsuarios.agregar(nuevoUsuario);
     cout << "Usuario agregado " << endl;
+    listaUsuarios.guardarUsuarios();
     cout << endl;
 }
 

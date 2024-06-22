@@ -115,8 +115,6 @@ void tabla(ListaUsuario& lista){
 		}
 		
 	}
-	
-	
-	
+	cout<<endl;
 	
 }
