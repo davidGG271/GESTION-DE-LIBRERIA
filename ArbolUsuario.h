@@ -48,7 +48,7 @@ class ArbolUsuario{
 		}
 		
 		void eliminar(string id){
-			
+			raiz = eliminarNodo(raiz, id);
 		}
 	    
 	private:
@@ -91,11 +91,11 @@ class ArbolUsuario{
 	    		return nodo;
 			}
 			
-			if(id<nodo->usuario->id){
+			if(id<nodo->usuario.id){
 				//si el id a encontrar es menor al id del nodo, pasara al nodo
 				//izquierdo
 				nodo->izquierda = eliminarNodo(nodo->izquierda, id);
-			}else if(id>nodo->usuario->id){
+			}else if(id>nodo->usuario.id){
 				//si el id a encontrar es mayor al id del nodo, pasara al nodo
 				//derecho
 				nodo->derecha = eliminarNodo(nodo->derecha, id);
@@ -116,13 +116,13 @@ class ArbolUsuario{
 					}
 				
 				//Si tiene 2 hijos, guardamos el menor nodo del subarbol derecho	
-				NodoArbolUsuario temp = encontrarMinimo(nodo->derecha)
+				NodoArbolUsuario* temp = encontrarMinimo(nodo->derecha);
 				
-				//Al noddo a eliminar le asignamos el valor de nodo temp...
-				nodo->usuario =temp->usuario;
+				//Al nodo a eliminar le asignamos el valor de nodo temp...
+				temp->usuario = nodo->usuario;
 				
 				//pasamos a buscar al antiguo nodo que tenia almacenado el menor valor del subarbol
-				nodo->derecha = eliminar(nodo->derecha, temp->usuario->id);
+				nodo->derecha = eliminarNodo(nodo->derecha, temp->usuario.id);
 				
 			}
 			return nodo;
