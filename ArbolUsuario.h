@@ -46,6 +46,10 @@ class ArbolUsuario{
 	    	NodoArbolUsuario* nodo=raiz;
 	    	print(nodo);
 		}
+		
+		void eliminar(string id){
+			
+		}
 	    
 	private:
 		NodoArbolUsuario* agregarNodo(NodoArbolUsuario* nodo, Usuario usuario){
@@ -81,6 +85,56 @@ class ArbolUsuario{
 	        }
 	    }
 	    
+	    NodoArbolUsuario* eliminarNodo(NodoArbolUsuario* nodo, string& id){
+	    	if(nodo!=nullptr){
+	    		// si el puntero es nulo, lo retornara
+	    		return nodo;
+			}
+			
+			if(id<nodo->usuario->id){
+				//si el id a encontrar es menor al id del nodo, pasara al nodo
+				//izquierdo
+				nodo->izquierda = eliminarNodo(nodo->izquierda, id);
+			}else if(id>nodo->usuario->id){
+				//si el id a encontrar es mayor al id del nodo, pasara al nodo
+				//derecho
+				nodo->derecha = eliminarNodo(nodo->derecha, id);
+			}else{
+				//Si lo encuetra, pasara varificar si tiene 1 o 0 hijos...
+				if (nodo->izquierda == nullptr) {
+					// guarda el valor del nodo hijo derecho, borra el nodo padre, y 
+					//toma su lugar
+		            NodoArbolUsuario* temp = nodo->derecha;
+		            delete nodo;
+		            return temp;
+		        } else if (nodo->derecha == nullptr) {
+		        	// guarda el valor del nodo hijo izquierdo, borra el nodo padre, y 
+					//toma su lugar
+		            NodoArbolUsuario* temp = nodo->izquierda;
+		            delete nodo;
+		            return temp;
+					}
+				
+				//Si tiene 2 hijos, guardamos el menor nodo del subarbol derecho	
+				NodoArbolUsuario temp = encontrarMinimo(nodo->derecha)
+				
+				//Al noddo a eliminar le asignamos el valor de nodo temp...
+				nodo->usuario =temp->usuario;
+				
+				//pasamos a buscar al antiguo nodo que tenia almacenado el menor valor del subarbol
+				nodo->derecha = eliminar(nodo->derecha, temp->usuario->id);
+				
+			}
+			return nodo;
+		}
+		
+		NodoArbolUsuario* encontrarMinimo(NodoArbolUsuario* nodo) {
+		    while (nodo->izquierda != nullptr) {
+		        nodo = nodo->izquierda;
+		    }
+		    return nodo;
+		}
+		
 	    void getLista(NodoArbolUsuario* nodo, vector<Usuario>& lista){
 	    	if(nodo!=nullptr){
 				getLista(nodo->izquierda,lista);

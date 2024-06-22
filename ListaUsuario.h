@@ -162,7 +162,17 @@ public:
 
 		return nullptr;
 	}
-
+	
+	int getLongitud(){
+			NodoU* actual = inicio;
+			int i = 0;
+			while(actual!=nullptr){
+				actual= actual->siguiente;
+				i++;
+			}
+			return i;
+		}
+	
 	friend std::ostream &operator<<(std::ostream &os, const ListaUsuario &lista)
 	{
 		NodoU *aux = lista.inicio;
