@@ -18,11 +18,11 @@ struct NodoArbolUsuario {
     NodoArbolUsuario* derecha;
 };
 
-class ArbolUsuario{
-	private:
-		NodoArbolUsuario* raiz;
-	
+struct ArbolUsuario{
+		
 	public:
+		NodoArbolUsuario* raiz;
+		
 		ArbolUsuario() {
 	        raiz = nullptr;
 	    }
@@ -53,6 +53,15 @@ class ArbolUsuario{
 		
 		void editar(Usuario usuario){
 			raiz = editarNodo(raiz, usuario);
+		}
+		
+		void reinsertarBalanceado() {
+            vector<Usuario> lista = getListaOrdenada();
+            raiz = construirArbolBalanceado(lista, 0, lista.size() - 1);
+        }
+        
+        int getAltura(){
+        	return alturaRec(raiz);
 		}
 	    
 	private:
@@ -163,6 +172,26 @@ class ArbolUsuario{
 				getLista(nodo->derecha,lista);
 			}
 		}
+		
+		NodoArbolUsuario* construirArbolBalanceado(vector<Usuario>& lista, int inicio, int fin) {
+            if (inicio > fin) {
+                return nullptr;
+            }
+            int medio = inicio + (fin - inicio) / 2;
+            NodoArbolUsuario* nodo = new NodoArbolUsuario{lista[medio], nullptr, nullptr};
+            nodo->izquierda = construirArbolBalanceado(lista, inicio, medio - 1);
+            nodo->derecha = construirArbolBalanceado(lista, medio + 1, fin);
+            return nodo;
+        }
+	    
+	    int alturaRec(NodoArbolUsuario* nodo) {
+            if (nodo == nullptr) {
+                return 0; // Un nodo nulo tiene altura 0
+            }
+            int alturaIzquierda = alturaRec(nodo->izquierda);
+            int alturaDerecha = alturaRec(nodo->derecha);
+            return 1 + max(alturaIzquierda, alturaDerecha);
+        }
 	    
 	    void print(NodoArbolUsuario* nodo){
 			if(nodo!=nullptr){

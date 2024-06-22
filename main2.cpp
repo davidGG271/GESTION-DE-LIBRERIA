@@ -7,6 +7,7 @@
 
 #include "FuncionesAdmin.h"
 #include "FuncionInicio.h"
+#include "FuncionesUsuario.h"
 #include "Administrador.h"
 //#include "Li"
 
@@ -22,18 +23,33 @@ using namespace std;
 void mostrarInicio();
 void inicioSesion();
 void adminIniciarSesion();
-int usuarioIniciarSesion();
+void usuarioIniciarSesion();
 
 Administrador admin;
 ListaUsuario listaUsuario;
 
-ArbolUsuario arbol;
+ArbolUsuario arbolUsuario;
 
 
 int main(){
 	
 	listaUsuario.cargarUsuarios();
 	listaUsuario.imprimir();
+	cout<<"\n";
+	NodoU* actual = listaUsuario.inicio;
+	while(actual!=nullptr){
+		arbolUsuario.agregar(actual->usuario);
+		actual= actual->siguiente;
+	}
+	arbolUsuario.imprimir();
+	cout<<"\n";
+	cout<<"altura: "<<arbolUsuario.getAltura();
+	arbolUsuario.reinsertarBalanceado();
+	cout<<"\naltura: "<<arbolUsuario.getAltura();
+	listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
+	
+	//vector<>
+	
 	/*
 	Usuario u1;
 	Usuario u2;
@@ -68,7 +84,6 @@ int main(){
 	
 	
 	
-	
 	arbol.imprimir();
 	*/
 	
@@ -80,6 +95,7 @@ int main(){
 	mostrarInicio();
 	
 }
+
 
 void mostrarInicio(){
 	int opcion;
@@ -102,6 +118,7 @@ void mostrarInicio(){
                 break;
             case 3:
                 cout << "Saliendo...\n";
+                //listaUsuario.guardarUsuarios();
                 break;
             default:
                 cout << "Opción no válida, intente nuevamente.\n";
@@ -119,7 +136,7 @@ void inicioSesion(){
     cout << "1. Administrador\n";
     cout << "2. Usuario\n";
     cout << "3. Atras\n";
-    cout << "Seleccione una opción: "	;
+    cout << "Seleccione una opción: ";
     
     cin >> opcion;
     
@@ -134,6 +151,7 @@ void inicioSesion(){
                 break;
             case 3:
                 cout << "Saliendo...\n";
+                
                 break;
             default:
                 cout << "Opción no válida, intente nuevamente.\n";
@@ -166,20 +184,27 @@ void adminIniciarSesion(){
 }
 
 
-int usuarioIniciarSesion(){
+void usuarioIniciarSesion(){
 	string correo = "";
 	string contrasenia = "";
+	NodoU* encontrado = nullptr;
 	
 	cout<<"Ingese su correo: ";
 	cin>>correo;
 	if(correo=="-1"){
-		return 3;
+		return;
 	}
 	cout<<"Ingrese su contraseña: ";
 	cin>>contrasenia;
 	
-	//falta
-	
+	encontrado = listaUsuario.buscarPorInicio(correo, contrasenia);
+	if(encontrado!=nullptr){
+		system("cls");
+		paginaPrincipalUsu(encontrado->usuario);
+		return;
+	}
+	system("cls");
+
 }
 
 

@@ -39,3 +39,5 @@ int asingnarIdUsuario(ListaUsuario lista){
 	return lista.getLongitud()+1;
 }
 
+
+

@@ -4,6 +4,7 @@
 #include "Usuario.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 struct NodoU {
 	Usuario usuario;
@@ -23,14 +24,12 @@ struct NodoU {
     }
 };
 
-class ListaUsuario
+struct ListaUsuario
 {
 
-private:
 	NodoU *inicio;
 	NodoU *final;
 
-public:
 	ListaUsuario()
 	{
 		inicio = nullptr;
@@ -54,6 +53,8 @@ public:
 			final->siguiente = nullptr;
 		}
 	}
+	
+
 
 	void eliminar(string id)
 	{
@@ -173,12 +174,42 @@ public:
 			return i;
 	}
 	
+	void sobreescribir(vector<Usuario> usuarios){
+    	NodoU* actual = inicio;
+    	
+    	while(actual!=nullptr){
+			actual->usuario = usuarios.front();
+			usuarios.erase(usuarios.begin());
+			actual= actual->siguiente;
+		}
+	}
+	
 	void imprimir(){
     	NodoU* actual = inicio;
     	while(actual!=nullptr){
     		cout<<actual->usuario.id;
     		actual=actual->siguiente;
 		}
+	}
+	
+	NodoU* buscarPorInicio(string correo, string contrasenia){
+		NodoU* actual = inicio;
+		while(actual!=nullptr){
+			if(convertirMinuscula(actual->usuario.correo)==convertirMinuscula(correo) && convertirMinuscula(actual->usuario.contrasenia)==convertirMinuscula(contrasenia)){
+				return actual;
+			}
+			actual=actual->siguiente;
+		}
+		
+		return nullptr;
+	}
+	
+	string convertirMinuscula(string cadena){
+		string aux= "";
+		for(const char c : cadena){
+			aux += tolower(static_cast<unsigned char>(c));
+		}
+		return aux;
 	}
 	
 	friend std::ostream &operator<<(std::ostream &os, const ListaUsuario &lista)

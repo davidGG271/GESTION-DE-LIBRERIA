@@ -166,6 +166,16 @@ public:
         // if we reach here, then element was not present
         return nullptr;
     }
+    //aun
+    void sobreescribir(vector<Libro> libros){
+    	NodoL* actual = inicio;
+    	
+    	while(actual!=nullptr){
+			actual->libro = libros.front();
+			libros.erase(libros.begin());
+			actual= actual->siguiente;
+		}
+	}
 
     vector<Libro> filtrarPorCategoria(const string& categoria) {
         vector<Libro> librosCategoria;

@@ -13,7 +13,6 @@ struct Preferencia {
 };
 
 struct Usuario{
-	string usuario;
 	string nombres;
 	string id;
 	string correo;
@@ -24,7 +23,7 @@ struct Usuario{
         os << usuario.id << '\n'
            << usuario.nombres << '\n'
            << usuario.correo << '\n'
-           << usuario.contrasenia << '\n';
+           << usuario.contrasenia;
         return os;
     }
 

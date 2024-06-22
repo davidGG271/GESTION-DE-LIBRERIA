@@ -42,6 +42,15 @@ class AlfabeticoArbolDeLibros{
 		    raiz = editarNodo(raiz, libro);
 		}
 		
+		void reinsertarBalanceado() {
+            vector<Libro> lista = getListaOrdenada();
+            raiz = construirArbolBalanceado(lista, 0, lista.size() - 1);
+        }
+        
+        int altura() {
+            return calcularAltura(raiz);
+        }
+        
 	private:
 		
 		NodoArbolAlfa* insertarNodo(NodoArbolAlfa* nodo, Libro libro){
@@ -113,6 +122,15 @@ class AlfabeticoArbolDeLibros{
 		        nodo->libro = temp->libro;
 		        nodo->derecha = eliminarNodo(nodo->derecha, temp->libro.titulo);
 		    }
+		    
+		    int calcularAltura(NodoArbolAlfa* nodo) {
+	            if (nodo == nullptr) {
+	                return 0;
+	            }
+	            int alturaIzquierda = calcularAltura(nodo->izquierda);
+	            int alturaDerecha = calcularAltura(nodo->derecha);
+	            return std::max(alturaIzquierda, alturaDerecha) + 1;
+	        }
 		
 		    return nodo;
 		}
@@ -151,6 +169,17 @@ class AlfabeticoArbolDeLibros{
 		
 		    return nodo;
 		}
+		
+		NodoArbolAlfa* construirArbolBalanceado(std::vector<Libro>& lista, int inicio, int fin) {
+            if (inicio > fin) {
+                return nullptr;
+            }
+            int medio = inicio + (fin - inicio) / 2;
+            NodoArbolAlfa* nodo = new NodoArbolAlfa{lista[medio], nullptr, nullptr};
+            nodo->izquierda = construirArbolBalanceado(lista, inicio, medio - 1);
+            nodo->derecha = construirArbolBalanceado(lista, medio + 1, fin);
+            return nodo;
+        }
 		
 		void obtenerListaOrdenada(NodoArbolAlfa* nodo, vector<Libro>& lista) {
 		    if (nodo != nullptr) {
