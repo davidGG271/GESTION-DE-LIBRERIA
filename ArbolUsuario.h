@@ -50,6 +50,10 @@ class ArbolUsuario{
 		void eliminar(string id){
 			raiz = eliminarNodo(raiz, id);
 		}
+		
+		void editar(Usuario usuario){
+			raiz = editarNodo(raiz, usuario);
+		}
 	    
 	private:
 		NodoArbolUsuario* agregarNodo(NodoArbolUsuario* nodo, Usuario usuario){
@@ -133,6 +137,23 @@ class ArbolUsuario{
 		        nodo = nodo->izquierda;
 		    }
 		    return nodo;
+		}
+		
+		NodoArbolUsuario* editarNodo(NodoArbolUsuario* nodo, Usuario usuario){
+			if (nodo == nullptr) {
+	            return nodo;
+	        }
+			
+	        if (nodo->usuario.id == usuario.id) {
+	        	nodo->usuario = usuario;
+	            return nodo;
+	        }
+	
+	        if (comparar(nodo->usuario.id,usuario.id)) {
+	            nodo->izquierda = editarNodo(nodo->izquierda, usuario);
+	        } else {
+	            nodo->derecha = editarNodo(nodo->derecha, usuario);
+	        }
 		}
 		
 	    void getLista(NodoArbolUsuario* nodo, vector<Usuario>& lista){
