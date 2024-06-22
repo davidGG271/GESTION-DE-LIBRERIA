@@ -19,12 +19,5 @@ struct NodoL {
     }
 };
 
-NodoL* agregarNodoLibro(Libro l) {
-    NodoL* nuevo = new NodoL();
-    nuevo->libro = l;
-    nuevo->siguiente = nullptr;
-    nuevo->anterior = nullptr;
-    return nuevo;
-}
 
 #endif

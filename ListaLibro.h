@@ -19,12 +19,11 @@ private:
 public:
     ListaLibro() : inicio(nullptr), final(nullptr) {}
 
-    void agregar(NodoL* nodoNuevo) {
+    void agregar(Libro libro) {
+    	NodoL* nodoNuevo = new NodoL{libro, nullptr, nullptr}; 
         if (inicio == nullptr) {
             inicio = nodoNuevo;
             final = nodoNuevo;
-            nodoNuevo->anterior = nullptr;
-            nodoNuevo->siguiente = nullptr;
         } else {
             nodoNuevo->anterior = final;
             final->siguiente = nodoNuevo;
@@ -206,9 +205,7 @@ public:
     friend istream& operator>>(istream& is, ListaLibro& lista) {
         Libro libro;
         while (is >> libro) {
-            NodoL* nodo = new NodoL();
-            nodo->libro = libro;
-            lista.agregar(nodo);
+            lista.agregar(libro);
         }
         return is;
     }

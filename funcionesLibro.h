@@ -43,8 +43,7 @@ void agregarNuevoLibro(ListaLibro& listaLibros, ISBNArbolLibro& isbnArbol) {
         cout << "Ingrese el lenguaje: ";
         cin >> nuevoLibro.lenguaje;
         nuevoLibro.estado = "true";
-        NodoL* nodoNuevoLibro = agregarNodoLibro(nuevoLibro);
-        listaLibros.agregar(nodoNuevoLibro);
+        listaLibros.agregar(nuevoLibro);
         isbnArbol.insertar(nuevoLibro.isbn);
         cout << "Libro agregado " << endl;
         cout << endl;

@@ -3,6 +3,8 @@
 
 #include "Prestamo.h"
 #include <iostream>
+#include <iostream>
+#include <fstream>
 
 struct NodoP {
     Prestamo prestamo;
