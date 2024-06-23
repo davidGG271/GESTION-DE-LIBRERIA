@@ -42,9 +42,10 @@ void agregarNuevoLibro(ListaLibro& listaLibros, ISBNArbolLibro& isbnArbol) {
         cin >> nuevoLibro.fecha_adquisicion;
         cout << "Ingrese el lenguaje: ";
         cin >> nuevoLibro.lenguaje;
-        nuevoLibro.estado = "true";
+        cout << "Ingrese el stock: ";
+        cin >> nuevoLibro.stock;
         listaLibros.agregar(nuevoLibro);
-        isbnArbol.insertar(nuevoLibro.isbn);
+        isbnArbol.insertar(nuevoLibro);
         cout << "Libro agregado " << endl;
         cout << endl;
     }
@@ -72,14 +73,13 @@ void buscarLibro(ListaLibro& listaLibros) {
         cout << "Autor: " << libro->libro.autor << endl;
         cout << "Año de publicación: " << libro->libro.ano_publicacion << endl;
         cout << "Género: " << libro->libro.genero << endl;
-        cout << "Tipo: " << libro->libro.tipo << endl;
         cout << "ISBN: " << libro->libro.isbn << endl;
         cout << "Editorial: " << libro->libro.editorial << endl;
         cout << "Número de páginas: " << libro->libro.num_paginas << endl;
         cout << "Descripción: " << libro->libro.descripcion << endl;
         cout << "Fecha de adquisición: " << libro->libro.fecha_adquisicion << endl;
         cout << "Lenguaje: " << libro->libro.lenguaje << endl;
-        cout << "Estado: " << (libro->libro.estado ? "Disponible" : "No disponible") << endl;
+        cout << "Estado: " << libro->libro.stock << endl;
     } else {
         cout << "Libro no encontrado." << endl;
     }

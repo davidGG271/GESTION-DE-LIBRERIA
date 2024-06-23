@@ -7,16 +7,16 @@
 using namespace std;
 
 struct Libro {
+	string isbn;              // ISBN
+    string titulo;            // Título
     string autor;             // Autor(es)
     int ano_publicacion;      // Año de publicación
     string genero;            // Género
-    string titulo;            // Título
-    string isbn;              // ISBN
-    string editorial;         // Editorial
     int num_paginas;          // Número de páginas
+    string editorial;         // Editorial
+    string lenguaje;          // Lenguaje
     string descripcion;       // Descripción
     string fecha_adquisicion; // Fecha de adquisición
-    string lenguaje;          // Lenguaje
     int stock;
 
     friend ostream& operator<<(ostream& os, const Libro& libro) {

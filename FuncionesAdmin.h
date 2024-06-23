@@ -10,23 +10,27 @@
 #include "ISBNArbolDeLibros.h"
 #include "ArbolUsuario.h"
 
+#include <ctime>
+#include <string>
 #include <iostream>
 
 using namespace std;
 
 void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin);
+void agregarLibro(ISBNArbolLibro& arbolLibros);
+void eliminarLibro(ISBNArbolLibro& arbolLibros);
 void tablaUsuarios(ArbolUsuario& arbol);
 string espaciar(int tamanio, int valor);
-void tablaLibros(ListaLibro& lista);
+void tablaLibros(ISBNArbolLibro& lista);
+string obtenerFechaActual();
 
 #endif
 
 void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin){
-	int opcion;
-	int opcion2;
-	int opcion3;
+        int opcion;
+        int opcion2;
+        int opcion3;
 
-	string isbn;
 	do{
 	cout<<"listo\n";
 	cout<<"Bienvenido "<<admin.nombre<<endl;
@@ -44,27 +48,34 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 		switch(opcion){
 			case 1:
 				system("cls");
-				tablaLibros(listaLibros);
 				do{
-				cout<<"1. Agregar Libro\n";
-				cout<<"2. Seleccionar libro\n";
-				cout<<"3. Elimminar libro\n";
-				cout<<"4. Atras\n";
-				cout<<"Selecciona una opcion: ";
-				cin>>opcion3;
+                    tablaLibros(arbolLibros);
+					cout<<"1. Agregar Libro\n";
+					cout<<"2. Seleccionar libro\n";
+					cout<<"3. Eliminar libro\n";
+					cout<<"4. Atras\n";
+					cout<<"Selecciona una opcion: ";
+					cin>>opcion2;
 
 					switch(opcion2){
 						case 1:
+						    system("cls");
+						    agregarLibro(arbolLibros);
 
 							//en proceso
 							break;
 						case 2:
 							system("cls");
 							tablaLibros(arbolLibros);
-							cin>>isbn;
+							//cin>>isbn;
+							//en espera
 
 							break;
 						case 3:
+						    system("cls");
+						    tablaLibros(arbolLibros);
+						    eliminarLibro(arbolLibros);
+						    system("cls");
 							break;
                         case 4:
 							break;
@@ -84,9 +95,9 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 				cout<<"2. Editar Usuario\n";
 				cout<<"3. Atras\n";
 				cout<<"Selecciona una opcion: ";
-				cin>>opcion2;
+				cin>>opcion3;
 
-					switch(opcion2){
+					switch(opcion3){
 						case 1:
 							//en proceso
 							break;
@@ -99,7 +110,7 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 							system("cls");
 							break;
 					}
-				}while(opcion2!=3);
+				}while(opcion3!=3);
 
 				break;
 			case 3:
@@ -117,6 +128,49 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 
 }
 
+void agregarLibro(ISBNArbolLibro& arbolLibros){
+    Libro libro;
+
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cout<<"Ingrese isbn";
+    getline(cin, libro.isbn);
+    cout << "Ingrese Título: ";
+    getline(cin, libro.titulo);
+    cout << "Ingrese Autor: ";
+    getline(cin, libro.autor);
+    cout << "Ingrese Año de Publicación: ";
+    cin >> libro.ano_publicacion;
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cout << "Ingrese Género: ";
+    getline(cin, libro.genero);
+    cout << "Ingrese Número de Páginas: ";
+    cin >> libro.num_paginas;
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    cout << "Ingrese Editorial: ";
+    getline(cin, libro.editorial);
+    cout << "Ingrese Lenguaje: ";
+    getline(cin, libro.lenguaje);
+    cout << "Ingrese Descripción: ";
+    getline(cin, libro.descripcion);
+    cout << "Ingrese el stock de copias: ";
+    cin >> libro.stock;
+    libro.fecha_adquisicion = obtenerFechaActual();
+    arbolLibros.insertar(libro);
+}
+
+void eliminarLibro(ISBNArbolLibro& arbolLibros){
+    string isbn;
+    cout<<"2. Seleccionar libro a eliminar por isbn\n";
+    cin>>isbn;
+    arbolLibros.eliminar(isbn);
+}
+
+string obtenerFechaActual() {
+    time_t tiempoActual = time(nullptr);
+    char buffer[11];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", localtime(&tiempoActual));
+    return string(buffer);
+}
 
 string espaciar(int tamanio, int valor){
 	int espacio = 0;
@@ -183,17 +237,10 @@ void tablaLibros(ISBNArbolLibro& arbol){
             // Imprimir cada usuario con sus detalles
             cout << libro.isbn << espaciar(2, 16)
                  << libro.titulo << espaciar(libro.titulo.size(), 26)
-                 << libro.ano_publicacion << espaciar(libro.ano_publicacion.size(), 28)
+                 << libro.ano_publicacion << espaciar(to_string(libro.ano_publicacion).size(), 28)
                  << libro.fecha_adquisicion << "\n";
         }
     }
-
-    cout << endl;
-	actual = lista.inicio;
-	while(actual!=nullptr){
-
-		cout<<actual->libro.isbn<<espaciar(2,26)<<actual->libro.titulo<<espaciar(actual->libro.titulo.size(),30)<<actual->libro.ano_publicacion<<espaciar(to_string(actual->libro.ano_publicacion).size(),40)<< actual->libro.fecha_adquisicion<<"\n";
-	}
 
 	cout<<endl;
 

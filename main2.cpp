@@ -180,7 +180,7 @@ void adminIniciarSesion(){
 
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(arbolUsuario, arbolLibro, admin);
+		paginaPrincipalAdmin(arbolUsuario, arbolLibrosIsbn, admin);
 		return;
 	}
 	system("cls");
