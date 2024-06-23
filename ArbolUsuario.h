@@ -248,7 +248,11 @@ private:
         os << nodo->usuario.id << '\n'
            << nodo->usuario.nombres << '\n'
            << nodo->usuario.correo << '\n'
-           << nodo->usuario.contrasenia << '\n';
+           << nodo->usuario.contrasenia << '\n'
+           << nodo->usuario.librosSeleccionados.size() << '\n';
+        for (const auto& libro : nodo->usuario.librosSeleccionados) {
+            os << libro;
+        }
         serializar(os, nodo->izquierda);
         serializar(os, nodo->derecha);
     }
@@ -268,7 +272,17 @@ private:
     std::getline(is, correo);
     std::getline(is, contrasenia);
 
-    Usuario usuario{id, nombres, correo, contrasenia, {}};
+    Usuario usuario{id, nombres, correo, contrasenia, {}, {}};
+
+    size_t numLibros;
+    is >> numLibros;
+    is.ignore();  // Ignorar el salto de línea después del número
+
+    for (size_t i = 0; i < numLibros; ++i) {
+        Libro libro;
+        is >> libro;
+        usuario.librosSeleccionados.push_back(libro);
+    }
     NodoArbolUsuario* nodo = new NodoArbolUsuario{usuario, nullptr, nullptr};
 
     nodo->izquierda = deserializar(is);

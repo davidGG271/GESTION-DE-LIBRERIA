@@ -209,7 +209,7 @@ void usuarioIniciarSesion(){
 	encontrado = arbolUsuario.verificarInicioSesion(correo, contrasenia);
 	if(encontrado!=nullptr){
 		system("cls");
-		paginaPrincipalUsu(encontrado->usuario);
+		paginaPrincipalUsu(encontrado->usuario, arbolLibrosIsbn);
 		return;
 	}
 	system("cls");
