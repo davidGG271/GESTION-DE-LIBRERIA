@@ -3,12 +3,24 @@
 
 #include "Libro.h"
 #include <iostream>
+#include <vector>
+#include <fstream>
 using namespace std;
 
 struct NodoArbol {
     Libro libro;
     NodoArbol* izquierda;
     NodoArbol* derecha;
+    
+    friend std::ostream& operator<<(std::ostream& os, const NodoArbol& nodo) {
+        os << nodo.libro;
+        return os;
+    }
+
+    friend std::istream& operator>>(std::istream& is, NodoArbol& nodo) {
+        is >> nodo.libro;
+        return is;
+    }
 };
 
 class ISBNArbolLibro {
@@ -55,6 +67,34 @@ class ISBNArbolLibro {
         int altura() {
             return calcularAltura(raiz);
         }
+        
+        void guardarLibros() {
+            std::ofstream archivo("libros.txt");
+            if (archivo.fail()) {
+                std::cout << "No se puede abrir el archivo.\n";
+                return;
+            }
+            archivo << *this;
+		}
+
+        void cargarLibros() {
+            std::ifstream archivo("libros.txt");
+            if (archivo.fail()) {
+                std::cout << "No se puede abrir el archivo.\n";
+                return;
+            }
+            archivo >> *this;
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, const ISBNArbolLibro& arbol) {
+            serializar(os, arbol.raiz);
+            return os;
+        }
+
+        friend std::istream& operator>>(std::istream& is, ISBNArbolLibro& arbol) {
+            arbol.raiz = deserializar(is);
+            return is;
+		}
 
 	private:
 	    NodoArbol* insertarRec(NodoArbol* nodo, Libro libro) {
@@ -177,8 +217,49 @@ class ISBNArbolLibro {
 				print(nodo->derecha);
 			}
 		}
+		
+		static void serializar(std::ostream& os, NodoArbol* nodo) {
+            if (nodo == nullptr) {
+                os << "#\n";
+            } else {
+                os << nodo->libro; // Utiliza el operador << de Libro para serializar el libro
+                serializar(os, nodo->izquierda);
+                serializar(os, nodo->derecha);
+            }
+        }
 
+        static NodoArbol* deserializar(std::istream& is) {
+            std::string isbn;
+            std::getline(is, isbn);
 
+            if (isbn == "#") {
+                return nullptr;
+            }
+
+            Libro libro;
+            libro.isbn = isbn;
+
+            getline(is, libro.autor);
+            is >> libro.ano_publicacion;
+            is.ignore();
+            getline(is, libro.genero);
+            getline(is, libro.titulo);
+            getline(is, libro.editorial);
+            is >> libro.num_paginas;
+            is.ignore();
+            getline(is, libro.descripcion);
+            getline(is, libro.fecha_adquisicion);
+            getline(is, libro.lenguaje);
+            is >> libro.stock;
+            is.ignore();
+
+            NodoArbol* nodo = new NodoArbol{libro, nullptr, nullptr};
+
+            nodo->izquierda = deserializar(is);
+            nodo->derecha = deserializar(is);
+
+            return nodo;
+		}
 };
 
 #endif // ISBNARBOLDELIBROS_H

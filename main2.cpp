@@ -51,8 +51,9 @@ int main(){
 	arbolUsuario.reinsertarBalanceado();
 	cout<<"\naltura: "<<arbolUsuario.getAltura();
 	//listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
-
-
+	
+	arbolLibrosIsbn.cargarLibros();
+	arbolLibrosIsbn.reinsertarBalanceado();
 	//vector<>
 
 	/*
@@ -124,6 +125,7 @@ void mostrarInicio(){
             case 3:
                 cout << "Saliendo...\n";
                 arbolUsuario.guardarUsuarios();
+                arbolLibrosIsbn.guardarLibros();
                 break;
             default:
                 cout << "Opcion no valida, intente nuevamente.\n";
