@@ -33,20 +33,21 @@ ArbolUsuario arbolUsuario;
 
 int main(){
 	
-	listaUsuario.cargarUsuarios();
+	/*listaUsuario.cargarUsuarios();
 	listaUsuario.imprimir();
 	cout<<"\n";
 	NodoU* actual = listaUsuario.inicio;
 	while(actual!=nullptr){
 		arbolUsuario.agregar(actual->usuario);
 		actual= actual->siguiente;
-	}
+	}*/
+	arbolUsuario.cargarUsuarios();
 	arbolUsuario.imprimir();
 	cout<<"\n";
 	cout<<"altura: "<<arbolUsuario.getAltura();
 	arbolUsuario.reinsertarBalanceado();
 	cout<<"\naltura: "<<arbolUsuario.getAltura();
-	listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
+	//listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
 	
 	//vector<>
 	
@@ -101,10 +102,10 @@ void mostrarInicio(){
 	int opcion;
 	do{
 	cout << "\nBienvenido a la Biblioteca\n";
-    cout << "1. Iniciar Sesión\n";
+    cout << "1. Iniciar Sesiï¿½n\n";
     cout << "2. Registrarse\n";
     cout << "3. Salir\n";
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opciï¿½n: ";
     
     cin >> opcion;
     
@@ -114,14 +115,14 @@ void mostrarInicio(){
                 inicioSesion();
                 break;
             case 2:
-                registrarse(listaUsuario);
+                registrarse(arbolUsuario);
                 break;
             case 3:
                 cout << "Saliendo...\n";
-                //listaUsuario.guardarUsuarios();
+                arbolUsuario.guardarUsuarios();
                 break;
             default:
-                cout << "Opción no válida, intente nuevamente.\n";
+                cout << "Opciï¿½n no vï¿½lida, intente nuevamente.\n";
                 break;
         }
     } while (opcion != 3);
@@ -129,14 +130,13 @@ void mostrarInicio(){
 }
 
 void inicioSesion(){
-	bool b = true;
     int opcion;
 	do{
 	cout << "\nElegir tipo de usuario\n";
     cout << "1. Administrador\n";
     cout << "2. Usuario\n";
     cout << "3. Atras\n";
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opciï¿½n: ";
     
     cin >> opcion;
     
@@ -151,10 +151,9 @@ void inicioSesion(){
                 break;
             case 3:
                 cout << "Saliendo...\n";
-                
                 break;
             default:
-                cout << "Opción no válida, intente nuevamente.\n";
+                cout << "Opciï¿½n no vï¿½lida, intente nuevamente.\n";
                 break;
         }
     } while (opcion != 3);
@@ -171,12 +170,12 @@ void adminIniciarSesion(){
 	if(correo=="-1"){
 		return;
 	}
-	cout<<"Ingrese su contraseña: ";
+	cout<<"Ingrese su contraseï¿½a: ";
 	cin>>contrasenia;
 	
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(listaUsuario, admin);
+		paginaPrincipalAdmin(listaUsuario, admin, arbolUsuario);
 		return;
 	}
 	system("cls");
@@ -194,7 +193,7 @@ void usuarioIniciarSesion(){
 	if(correo=="-1"){
 		return;
 	}
-	cout<<"Ingrese su contraseña: ";
+	cout<<"Ingrese su contraseï¿½a: ";
 	cin>>contrasenia;
 	
 	encontrado = listaUsuario.buscarPorInicio(correo, contrasenia);
