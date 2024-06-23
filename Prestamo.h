@@ -12,18 +12,18 @@ struct Prestamo {
     string id;
     string fechaDevolucion;
     string fechaSalida;
-    vector<Libro> libros;
-    Usuario usuario;
+    vector<string> isbnLibros;
+    string idUsuario;
 
     friend ostream& operator<<(ostream& os, const Prestamo& prestamo) {
         os << prestamo.id << '\n'
            << prestamo.fechaDevolucion << '\n'
            << prestamo.fechaSalida << '\n'
-           << prestamo.libros.size() << '\n';
-        for (const auto& libro : prestamo.libros) {
-            os << libro << '\n';
+           << prestamo.isbnLibros.size() << '\n';
+        for (const auto& isbnLibro : prestamo.isbnLibros) {
+            os << isbnLibro << '\n';
         }
-        os << prestamo.usuario;
+        os << prestamo.idUsuario;
         return os;
     }
 
@@ -37,12 +37,12 @@ struct Prestamo {
         is.ignore();
         is >> librosSize;
         is.ignore();
-        prestamo.libros.resize(librosSize);
-        for (auto& libro : prestamo.libros) {
-            is >> libro;
+        prestamo.isbnLibros.resize(librosSize);
+        for (auto& isbnLibro : prestamo.isbnLibros) {
+            is >> isbnLibro;
             is.ignore();
         }
-        is >> prestamo.usuario;
+        is >> prestamo.idUsuario;
         return is;
     }
 };

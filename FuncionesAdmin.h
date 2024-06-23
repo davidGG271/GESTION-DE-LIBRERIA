@@ -32,6 +32,7 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
         int opcion;
         int opcion2;
         int opcion3;
+        int opcion4;
 
 	do{
 	cout<<"listo\n";
@@ -94,8 +95,7 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 				do{
                 tablaUsuarios(arbolUsuarios);
 				cout<<"1. Eliminar Usuario\n";
-				cout<<"2. Editar Usuario\n";
-				cout<<"3. Atras\n";
+				cout<<"2. Atras\n";
 				cout<<"Selecciona una opcion: ";
 				cin>>opcion3;
 
@@ -108,21 +108,25 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 							system("cls");
 							break;
 						case 2:
-							//en proceso
-							break;
-						case 3:
 							break;
 						default:
 							system("cls");
 							break;
 					}
-				}while(opcion3!=3);
+				}while(opcion3!=2);
 
 				break;
 			case 3:
+			    system("cls");
+			    do{
+
+			    }while(opcion!=4);
 				break;
 			case 4:
 				cout << "Saliendo...\n";
+                cout<<"1. Eliminar Usuario\n";
+				cout<<"2. Atras\n";
+				cout<<"Selecciona una opcion: ";
 				system("cls");
 				break;
 			default:
