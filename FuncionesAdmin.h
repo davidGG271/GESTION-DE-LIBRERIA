@@ -19,6 +19,8 @@ using namespace std;
 void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin);
 void agregarLibro(ISBNArbolLibro& arbolLibros);
 void eliminarLibro(ISBNArbolLibro& arbolLibros);
+void mostrarDetalles(ISBNArbolLibro& arbolLibros);
+//void editarLibro(ISBNArbolLibro& arbolLibros);
 void tablaUsuarios(ArbolUsuario& arbol);
 string espaciar(int tamanio, int valor);
 void tablaLibros(ISBNArbolLibro& lista);
@@ -67,6 +69,7 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 						case 2:
 							system("cls");
 							tablaLibros(arbolLibros);
+							mostrarDetalles(arbolLibros);
 							//cin>>isbn;
 							//en espera
 
@@ -132,7 +135,7 @@ void agregarLibro(ISBNArbolLibro& arbolLibros){
     Libro libro;
 
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    cout<<"Ingrese isbn";
+    cout<<"Ingrese isbn: ";
     getline(cin, libro.isbn);
     cout << "Ingrese Título: ";
     getline(cin, libro.titulo);
@@ -165,6 +168,113 @@ void eliminarLibro(ISBNArbolLibro& arbolLibros){
     arbolLibros.eliminar(isbn);
 }
 
+void mostrarDetalles(ISBNArbolLibro& arbolLibros){
+    string isbn;
+    int opcion;
+    cout<<"Tipee el ISBN de un libro: ";
+    cin>>isbn;
+
+    NodoArbol* encontrado = arbolLibros.buscar(isbn);
+    if(encontrado!=nullptr){
+        system("cls");
+            do{
+                cout << "Detalles del libro:" << endl;
+                cout << "-------------------" << endl;
+                cout << "1. ISBN:                  " << encontrado->libro.isbn << endl;
+                cout << "2. Título:                " << encontrado->libro.titulo << endl;
+                cout << "3. Autor(es):             " << encontrado->libro.autor << endl;
+                cout << "4. Año de publicación:    " << encontrado->libro.ano_publicacion << endl;
+                cout << "5. Género:                " << encontrado->libro.genero << endl;
+                cout << "6. Número de páginas:     " << encontrado->libro.num_paginas << endl;
+                cout << "7. Editorial:             " << encontrado->libro.editorial << endl;
+                cout << "8. Lenguaje:              " << encontrado->libro.lenguaje << endl;
+                cout << "9. Descripción:           " << encontrado->libro.descripcion << endl;
+                cout << "10. Fecha de adquisición: " << encontrado->libro.fecha_adquisicion << endl;
+                cout << "11. Stock:             " << encontrado->libro.stock << endl<<endl;
+                cout << "12. salir";
+                cout << "-------------------\n" << endl;
+                cout<<"Elige atributo modificar: ";
+                cin>>opcion;
+                system("cls");
+                switch(opcion){
+                    case 1:
+                        cout << "Ingrese el nuevo ISBN: ";
+                        cin >> encontrado->libro.isbn;
+                        break;
+                    case 2:
+                        cout << "Ingrese el nuevo título: ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.titulo);
+                        break;
+                    case 3:
+                        cout << "Ingrese el nuevo autor(es): ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.autor);
+                        break;
+                    case 4:
+                        cout << "Ingrese el nuevo año de publicación: ";
+                        cin >> encontrado->libro.ano_publicacion;
+                        break;
+                    case 5:
+                        cout << "Ingrese el nuevo género: ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.genero);
+                        break;
+                    case 6:
+                        cout << "Ingrese el nuevo número de páginas: ";
+                        cin >> encontrado->libro.num_paginas;
+                        break;
+                    case 7:
+                        cout << "Ingrese la nueva editorial: ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.editorial);
+                        break;
+                    case 8:
+                        cout << "Ingrese el nuevo lenguaje: ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.lenguaje);
+                        break;
+                    case 9:
+                        cout << "Ingrese la nueva descripción: ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.descripcion);
+                        break;
+                    case 10:
+                        cout << "Ingrese la nueva fecha de adquisición: ";
+                        cin.ignore();
+                        getline(cin, encontrado->libro.fecha_adquisicion);
+                        break;
+                    case 11:
+                        cout << "Ingrese el nuevo stock: ";
+                        cin >> encontrado->libro.stock;
+                        break;
+                    case 12:
+                        system("cls");
+                        cout << "Saliendo..." << endl;
+                        break;
+                    default:
+                        cout << "Opción inválida." << endl;
+                        break;
+				}
+            }while(opcion!=12);
+
+    }else{
+        cout<<"isbn no valido";
+    }
+}
+/*
+void editarLibro(ISBNArbolLibro& arbolLibros){
+    string isbn;
+    do{
+        cout<<"Tipee el ISBN de un libro: ";
+        cin>>isbn;
+        NodoArbol* encontrado = arbolLibros.buscar(isbn);
+        if(encontrado!=nullptr){
+
+        }
+    }while();
+}
+*/
 string obtenerFechaActual() {
     time_t tiempoActual = time(nullptr);
     char buffer[11];

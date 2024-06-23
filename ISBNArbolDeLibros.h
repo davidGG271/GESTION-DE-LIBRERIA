@@ -24,7 +24,7 @@ class ISBNArbolLibro {
 	        raiz = insertarRec(raiz, libro);
 	    }
 
-	    bool buscar(string isbn) {
+	    NodoArbol* buscar(string isbn) {
 	        return buscarRec(raiz, isbn);
 	    }
 
@@ -72,13 +72,13 @@ class ISBNArbolLibro {
 	        return nodo;
 	    }
 
-	    bool buscarRec(NodoArbol* nodo, string isbn) {
+	    NodoArbol* buscarRec(NodoArbol* nodo, string isbn) {
 	        if (nodo == nullptr) {
-	            return false;
+	            return nullptr;
 	        }
 
 	        if (nodo->libro.isbn == isbn) {
-	            return true;
+	            return nodo;
 	        }
 
 	        if (isbn < nodo->libro.isbn) {
