@@ -13,8 +13,8 @@ struct Preferencia {
 };
 
 struct Usuario{
+    string id;
 	string nombres;
-	string id;
 	string correo;
 	string contrasenia;
 	vector<Preferencia> preferencias;

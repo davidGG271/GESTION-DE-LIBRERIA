@@ -5,7 +5,8 @@
 #include <string>
 #include "Usuario.h"
 #include "ListaUsuario.h"
-#include <limits> 
+#include <limits>
+#include <ArbolUsuario.h>
 
 using namespace std;
 
@@ -26,9 +27,9 @@ void registrarse(ArbolUsuario& listaUsuarios){
 
     cout << "Ingrese contrasenia del usuario: ";
     getline(cin, nuevoUsuario.contrasenia);
-	
+
 	nuevoUsuario.id = to_string(asingnarIdUsuario(listaUsuarios));
-	
+
 	listaUsuarios.agregar(nuevoUsuario);
     cout << "Usuario agregado " << endl;
     //listaUsuarios.guardarUsuarios();

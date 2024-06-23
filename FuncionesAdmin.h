@@ -6,22 +6,26 @@
 #include "ListaLibro.h"
 #include "Administrador.h"
 
+
+#include "ISBNArbolDeLibros.h"
+#include "ArbolUsuario.h"
+
 #include <iostream>
 
 using namespace std;
 
-void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, Administrador& admin);
-void tablaUsuarios(ListaUsuario& lista);
+void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin);
+void tablaUsuarios(ArbolUsuario& arbol);
 string espaciar(int tamanio, int valor);
 void tablaLibros(ListaLibro& lista);
 
 #endif
 
-void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, Administrador& admin){
+void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin){
 	int opcion;
 	int opcion2;
 	int opcion3;
-	
+
 	string isbn;
 	do{
 	cout<<"listo\n";
@@ -56,7 +60,7 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, 
 							break;
 						case 2:
 							system("cls");
-							tablaLibros(listaLibros);
+							tablaLibros(arbolLibros);
 							cin>>isbn;
 
 							break;
@@ -73,7 +77,7 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, 
 				break;
 			case 2:
 				system("cls");
-				tablaUsuarios(listaUsuarios);
+				tablaUsuarios(arbolUsuarios);
 
 				do{
 				cout<<"1. Eliminar Usuario\n";
@@ -126,42 +130,65 @@ string espaciar(int tamanio, int valor){
 	return texto;
 }
 
-void tablaUsuarios(ListaUsuario& lista){
-	system("color f9");
-	NodoU* u;
-	string preferencias="";
+void tablaUsuarios(ArbolUsuario& arbol) {
+    system("color f9");
+    vector<Usuario> usuarios = arbol.getListaOrdenada();
 
-	cout<<"___________________________________\n";
-	cout<<"ID                          NOMBRES                   CORREO                       PREFERENCIAS            ";
-	cout<<"___________________________________\n";
+    cout << "_______________________________________________________________________________________________________________\n";
+    cout << "ID              NOMBRES                  CORREO                        PREFERENCIAS\n";
+    cout << "_______________________________________________________________________________________________________________\n";
 
-	for(int i = 0; i<lista.getLongitud();i++){
-		u =lista.encontrarUsuario(to_string(i+1));
-		preferencias = "[ ";
-		if(u!=nullptr){
-			for(const auto p : u->usuario.preferencias){
-				preferencias = preferencias + p.tipo+", ";
-			}
-		preferencias = preferencias + "]";
-			cout<<u->usuario.id<<espaciar(2,26)<<u->usuario.nombres<<espaciar(u->usuario.nombres.size(),30)<<u->usuario.correo<<espaciar(u->usuario.correo.size(),40)<< preferencias<<"\n";
-		}else{
-			cout<<"no hay mas usuario";
-		}
+    // Verificar si hay usuarios para mostrar
+    if (usuarios.empty()) {
+        cout << "No hay usuarios registrados.\n";
+    } else {
+        // Iterar sobre cada usuario en el vector
+        for (const auto& usuario : usuarios) {
+            string preferencias = "[ ";
 
-	}
-	cout<<endl;
+            // Construir la lista de preferencias
+            for (size_t i = 0; i < usuario.preferencias.size(); ++i) {
+                preferencias += usuario.preferencias[i].tipo;
+                if (i != usuario.preferencias.size() - 1) {
+                    preferencias += ", ";
+                }
+            }
+            preferencias += " ]";
 
+            // Imprimir cada usuario con sus detalles
+            cout << usuario.id << espaciar(2, 16)
+                 << usuario.nombres << espaciar(usuario.nombres.size(), 26)
+                 << usuario.correo << espaciar(usuario.correo.size(), 28)
+                 << preferencias << "\n";
+        }
+    }
+
+    cout << endl;
 }
 
-void tablaLibros(ListaLibro& lista){
+void tablaLibros(ISBNArbolLibro& arbol){
 	system("color f9");
-	NodoL* actual = nullptr;
-	string preferencias="";
+	vector<Libro> libros = arbol.getListaOrdenada();
 
-	cout<<"___________________________________\n";
+	cout<<"____________________________________________________________________________________________________________\n";
 	cout<<"ISBN               TITULO                 AÑO DE PUBLICACION                  FECHA DE ADQUISION            ";
-	cout<<"___________________________________\n";
+	cout<<"_____________________________________________________________________________________________________________\n";
 
+     if (libros.empty()) {
+        cout << "No hay libros registrados.\n";
+    } else {
+        // Iterar sobre cada usuario en el vector
+        for (const auto& libro : libros) {
+
+            // Imprimir cada usuario con sus detalles
+            cout << libro.isbn << espaciar(2, 16)
+                 << libro.titulo << espaciar(libro.titulo.size(), 26)
+                 << libro.ano_publicacion << espaciar(libro.ano_publicacion.size(), 28)
+                 << libro.fecha_adquisicion << "\n";
+        }
+    }
+
+    cout << endl;
 	actual = lista.inicio;
 	while(actual!=nullptr){
 

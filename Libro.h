@@ -23,7 +23,6 @@ struct Libro {
         os << libro.autor << '\n'
            << libro.ano_publicacion << '\n'
            << libro.genero << '\n'
-           << libro.tipo << '\n'
            << libro.titulo << '\n'
            << libro.isbn << '\n'
            << libro.editorial << '\n'
@@ -31,7 +30,7 @@ struct Libro {
            << libro.descripcion << '\n'
            << libro.fecha_adquisicion << '\n'
            << libro.lenguaje << '\n'
-           << libro.estado << '\n';
+           << libro.stock << '\n';
         return os;
     }
 
@@ -40,7 +39,6 @@ struct Libro {
         is >> libro.ano_publicacion;
         is.ignore();
         getline(is, libro.genero);
-        getline(is, libro.tipo);
         getline(is, libro.titulo);
         getline(is, libro.isbn);
         getline(is, libro.editorial);
@@ -49,7 +47,7 @@ struct Libro {
         getline(is, libro.descripcion);
         getline(is, libro.fecha_adquisicion);
         getline(is, libro.lenguaje);
-        is >> libro.estado;
+        is >> libro.stock;
         is.ignore();
         return is;
     }

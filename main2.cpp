@@ -106,7 +106,7 @@ void mostrarInicio(){
 	int opcion;
 	do{
 	cout << "\nBienvenido a la Biblioteca\n";
-    cout << "1. Iniciar Sesi n\n";
+    cout << "1. Iniciar Sesion\n";
     cout << "2. Registrarse\n";
     cout << "3. Salir\n";
     cout << "Seleccione una opci n: ";
@@ -126,7 +126,7 @@ void mostrarInicio(){
                 arbolUsuario.guardarUsuarios();
                 break;
             default:
-                cout << "Opci n no v lida, intente nuevamente.\n";
+                cout << "Opcion no valida, intente nuevamente.\n";
                 break;
         }
     } while (opcion != 3);
@@ -173,14 +173,14 @@ void adminIniciarSesion(){
 	cout<<"Ingese su correo: ";
 	cin>>correo;
 	if(correo=="-1"){
-		return;
+		return;	
 	}
 	cout<<"Ingrese su contrase a: ";
 	cin>>contrasenia;
 
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(listaUsuario, listaLibro, admin);
+		paginaPrincipalAdmin(arbolUsuario, arbolLibro, admin);
 		return;
 	}
 	system("cls");
