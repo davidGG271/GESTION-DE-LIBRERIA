@@ -1,7 +1,7 @@
 #ifndef ISBNARBOLDELIBROS_H
 #define ISBNARBOLDELIBROS_H
 
-#include <Libro.h>
+#include "Libro.h"
 #include <iostream>
 using namespace std;
 
@@ -63,9 +63,9 @@ class ISBNArbolLibro {
 	            return nuevoNodo;
 	        }
 
-	        if (isbn < nodo->libro.isbn) {
+	        if (libro.isbn < nodo->libro.isbn) {
 	            nodo->izquierda = insertarRec(nodo->izquierda, libro);
-	        } else if (isbn > nodo->libro.isbn) {
+	        } else if (libro.isbn > nodo->libro.isbn) {
 	            nodo->derecha = insertarRec(nodo->derecha, libro);
 	        }
 
@@ -88,9 +88,9 @@ class ISBNArbolLibro {
 	        }
 	    }
 
-	    NodoArbolAlfa* eliminarNodo(NodoArbol* nodo, const string& isbn) {
+	    NodoArbol* eliminarNodo(NodoArbol* nodo, const string& isbn) {
 		    if (nodo == nullptr) {
-		        return nodo; // Caso base: árbol vacío o nodo no encontrado
+		        return nodo; // Caso base: ï¿½rbol vacï¿½o o nodo no encontrado
 		    }
 
 		    if (isbn < nodo->libro.isbn) {

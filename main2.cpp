@@ -36,7 +36,7 @@ ISBNArbolLibro arbolLibrosIsbn;
 
 int main(){
 
-	listaUsuario.cargarUsuarios();
+	/*listaUsuario.cargarUsuarios();
 	listaUsuario.imprimir();
 	cout<<"\n";
 	NodoU* actual = listaUsuario.inicio;
@@ -50,7 +50,7 @@ int main(){
 	cout<<"altura: "<<arbolUsuario.getAltura();
 	arbolUsuario.reinsertarBalanceado();
 	cout<<"\naltura: "<<arbolUsuario.getAltura();
-	listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
+	//listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
 
 
 	//vector<>
@@ -180,7 +180,7 @@ void adminIniciarSesion(){
 
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(listaUsuario, listaLibro, admin, arbolUsuario);
+		paginaPrincipalAdmin(listaUsuario, listaLibro, admin);
 		return;
 	}
 	system("cls");
@@ -191,7 +191,7 @@ void adminIniciarSesion(){
 void usuarioIniciarSesion(){
 	string correo = "";
 	string contrasenia = "";
-	NodoU* encontrado = nullptr;
+	NodoArbolUsuario* encontrado = nullptr;
 
 	cout<<"Ingese su correo: ";
 	cin>>correo;
@@ -201,7 +201,7 @@ void usuarioIniciarSesion(){
 	cout<<"Ingrese su contrase a: ";
 	cin>>contrasenia;
 
-	encontrado = listaUsuario.buscarPorInicio(correo, contrasenia);
+	encontrado = arbolUsuario.verificarInicioSesion(correo, contrasenia);
 	if(encontrado!=nullptr){
 		system("cls");
 		paginaPrincipalUsu(encontrado->usuario);

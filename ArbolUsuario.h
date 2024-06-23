@@ -93,6 +93,10 @@ struct ArbolUsuario {
         archivo >> *this;
     }
 
+    NodoArbolUsuario* verificarInicioSesion(const std::string& correo, const std::string& contrasenia) {
+        return verificarRec(raiz, correo, contrasenia);
+    }
+
     friend std::ostream& operator<<(std::ostream& os, const ArbolUsuario& arbol) {
         serializar(os, arbol.raiz);
         return os;
@@ -116,6 +120,21 @@ private:
         }
         return nodo;
     }
+
+    NodoArbolUsuario* verificarRec(NodoArbolUsuario* nodo, const string& correo, const string& contrasenia) {
+        if (nodo == nullptr) {
+            return nullptr;
+        }
+        if (nodo->usuario.correo == correo && nodo->usuario.contrasenia == contrasenia) {
+            return nodo;
+        }
+        NodoArbolUsuario* izquierda = verificarRec(nodo->izquierda, correo, contrasenia);
+        if (izquierda != nullptr) {
+            return izquierda;
+        }
+        return verificarRec(nodo->derecha, correo, contrasenia);
+    }
+    
 
     bool buscarRec(NodoArbolUsuario* nodo, std::string& id) {
         if (nodo == nullptr) {
