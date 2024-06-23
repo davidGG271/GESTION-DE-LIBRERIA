@@ -28,6 +28,11 @@ class AlfabeticoArbolDeLibros{
 			return buscarNodo(raiz, titulo);
 		}
 		
+		void imprimir(){
+	    	NodoArbolAlfa* nodo=raiz;
+	    	print(nodo);
+		}
+		
 		vector<Libro> getListaOrdenada() {
 		    vector<Libro> lista;
 		    obtenerListaOrdenada(raiz, lista);
@@ -123,16 +128,8 @@ class AlfabeticoArbolDeLibros{
 		        nodo->derecha = eliminarNodo(nodo->derecha, temp->libro.titulo);
 		    }
 		    
-		    int calcularAltura(NodoArbolAlfa* nodo) {
-	            if (nodo == nullptr) {
-	                return 0;
-	            }
-	            int alturaIzquierda = calcularAltura(nodo->izquierda);
-	            int alturaDerecha = calcularAltura(nodo->derecha);
-	            return std::max(alturaIzquierda, alturaDerecha) + 1;
-	        }
+			return nodo;
 		
-		    return nodo;
 		}
 		
 		NodoArbolAlfa* encontrarMinimo(NodoArbolAlfa* nodo) {
@@ -170,7 +167,7 @@ class AlfabeticoArbolDeLibros{
 		    return nodo;
 		}
 		
-		NodoArbolAlfa* construirArbolBalanceado(std::vector<Libro>& lista, int inicio, int fin) {
+		NodoArbolAlfa* construirArbolBalanceado(vector<Libro>& lista, int inicio, int fin) {
             if (inicio > fin) {
                 return nullptr;
             }
@@ -189,6 +186,22 @@ class AlfabeticoArbolDeLibros{
 		    }
 		}
 		
+		int calcularAltura(NodoArbolAlfa* nodo) {
+	            if (nodo == nullptr) {
+	                return 0;
+	            }
+	            int alturaIzquierda = calcularAltura(nodo->izquierda);
+	            int alturaDerecha = calcularAltura(nodo->derecha);
+	            return std::max(alturaIzquierda, alturaDerecha) + 1;
+	        }
+		
+		void print(NodoArbolAlfa* nodo){
+			if(nodo!=nullptr){
+				print(nodo->izquierda);
+				cout<<nodo->libro.titulo<<"\t";
+				print(nodo->derecha);
+			}
+		}
 };
 
 #endif

@@ -4,12 +4,13 @@
 #include "ListaLibro.h"
 #include "NodoLibro.h"
 #include "ArbolUsuario.h"
+#include "ISBNArbolDeLibros.h"
 
 #include "FuncionesAdmin.h"
 #include "FuncionInicio.h"
 #include "FuncionesUsuario.h"
 #include "Administrador.h"
-//#include "Li"
+
 
 #include <string>
 
@@ -27,12 +28,14 @@ void usuarioIniciarSesion();
 
 Administrador admin;
 ListaUsuario listaUsuario;
+ListaLibro listaLibro;
 
 ArbolUsuario arbolUsuario;
+ISBNArbolLibro arbolLibrosIsbn;
 
 
 int main(){
-	
+
 	listaUsuario.cargarUsuarios();
 	listaUsuario.imprimir();
 	cout<<"\n";
@@ -47,53 +50,54 @@ int main(){
 	arbolUsuario.reinsertarBalanceado();
 	cout<<"\naltura: "<<arbolUsuario.getAltura();
 	listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
-	
+
+
 	//vector<>
-	
+
 	/*
 	Usuario u1;
 	Usuario u2;
 	Usuario u3;
-	
+
 	NodoU n1;
 	NodoU n2;
 	NodoU n3;
-	
+
 	u1.id= "1";
 	u1.nombres = "henry huaman";
 	u1.correo = "henry@hotmail.com";
 	u1.contrasenia = "123";
-	
+
 	u2.id = "5";
 	u2.nombres = "felipe lopez";
 	u2.correo = "felipe@hotmail.com";
 	u2.contrasenia = "124";
-	
+
 	u3.id = "3";
 	u3.nombres = "miguel perez";
 	u3.correo = "miguel@hotmail.com";
 	u3.contrasenia = "125";
-	
+
 	n1.usuario =u1;
 	n2.usuario =u2;
 	n3.usuario =u3;
-	
+
 	arbol.agregar(u1);
 	arbol.agregar(u3);
 	arbol.agregar(u2);
-	
-	
-	
+
+
+
 	arbol.imprimir();
 	*/
-	
+
 	admin.id = 1;
 	admin.nombre = "henry";
 	admin.correo = "henry";
 	admin.contrasenia = "abc";
-	
+
 	mostrarInicio();
-	
+
 }
 
 
@@ -101,13 +105,13 @@ void mostrarInicio(){
 	int opcion;
 	do{
 	cout << "\nBienvenido a la Biblioteca\n";
-    cout << "1. Iniciar Sesión\n";
+    cout << "1. Iniciar Sesi n\n";
     cout << "2. Registrarse\n";
     cout << "3. Salir\n";
-    cout << "Seleccione una opción: ";
-    
+    cout << "Seleccione una opci n: ";
+
     cin >> opcion;
-    
+
     	switch (opcion) {
             case 1:
             	system("cls");
@@ -121,11 +125,11 @@ void mostrarInicio(){
                 //listaUsuario.guardarUsuarios();
                 break;
             default:
-                cout << "Opción no válida, intente nuevamente.\n";
+                cout << "Opci n no v lida, intente nuevamente.\n";
                 break;
         }
     } while (opcion != 3);
-    	
+
 }
 
 void inicioSesion(){
@@ -136,47 +140,47 @@ void inicioSesion(){
     cout << "1. Administrador\n";
     cout << "2. Usuario\n";
     cout << "3. Atras\n";
-    cout << "Seleccione una opción: ";
-    
+    cout << "Seleccione una opci n: ";
+
     cin >> opcion;
-    
+
     	switch (opcion) {
             case 1:
             	system("cls");
                 adminIniciarSesion();
-				
+
                 break;
             case 2:
                 usuarioIniciarSesion();
                 break;
             case 3:
                 cout << "Saliendo...\n";
-                
+
                 break;
             default:
-                cout << "Opción no válida, intente nuevamente.\n";
+                cout << "Opci n no v lida, intente nuevamente.\n";
                 break;
         }
     } while (opcion != 3);
-    
+
 }
 
 
 void adminIniciarSesion(){
 	string correo = "";
-	
+
 	string contrasenia = "";
 	cout<<"Ingese su correo: ";
 	cin>>correo;
 	if(correo=="-1"){
 		return;
 	}
-	cout<<"Ingrese su contraseña: ";
+	cout<<"Ingrese su contrase a: ";
 	cin>>contrasenia;
-	
+
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(listaUsuario, admin);
+		paginaPrincipalAdmin(listaUsuario, listaLibro, admin);
 		return;
 	}
 	system("cls");
@@ -188,15 +192,15 @@ void usuarioIniciarSesion(){
 	string correo = "";
 	string contrasenia = "";
 	NodoU* encontrado = nullptr;
-	
+
 	cout<<"Ingese su correo: ";
 	cin>>correo;
 	if(correo=="-1"){
 		return;
 	}
-	cout<<"Ingrese su contraseña: ";
+	cout<<"Ingrese su contrase a: ";
 	cin>>contrasenia;
-	
+
 	encontrado = listaUsuario.buscarPorInicio(correo, contrasenia);
 	if(encontrado!=nullptr){
 		system("cls");
@@ -206,5 +210,3 @@ void usuarioIniciarSesion(){
 	system("cls");
 
 }
-
-
