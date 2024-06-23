@@ -1,4 +1,4 @@
-#ifndef FUNCIONESUSUARIO_H
+    #ifndef FUNCIONESUSUARIO_H
 #define FUNCIONESUSUARIO_H
 
 #include "Usuario.h"
@@ -18,14 +18,14 @@ void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros){
 	int opcion;
 	cout<<"hola "<<usuario.nombres<<"\n";
 	do{
-		
+
 		cout<<"1. Ver libros\n";
 		cout<<"2. Gestionar Cuenta\n";
 		cout<<"3. Tu Historial de prestamos\n";
 		cout<<"4. Ver libros seleccionados\n";
 		cout<<"5. Ver recomendados\n";
 		cout<<"6. Cerrar sesion\n";
-		
+
 		cout<<"Ingrese la funcion a realizar: ";
 		cin>>opcion;
 		switch(opcion){
@@ -50,7 +50,7 @@ void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros){
 				system("cls");
 				cout<<"Opci�n no v�lida, intente nuevamente.\n";
 				break;
-		}	
+		}
 	}while(opcion!=6);
 }
 
@@ -142,29 +142,30 @@ void verLibrosSeleccionados(Usuario& usuario){
     }
 }
 
-void gestionarCuenta(Usuario& usuario){
-	int opcion;
+void gestionarCuenta(Usuario& usuario) {
+    int opcion;
     cout << "1. Modificar correo\n";
     cout << "2. Modificar nombre\n";
     cout << "3. Modificar contraseña\n";
     cout << "Seleccione una opción: ";
     cin >> opcion;
-    cin.ignore();
+    cin.ignore();  // Limpiar el buffer de entrada
 
     switch (opcion) {
     case 1:
         cout << "Ingrese el nuevo correo: ";
-        cin>>usuario.correo;
+        getline(cin, usuario.correo);
         break;
     case 2:
         cout << "Ingrese el nuevo nombre: ";
-        usuario.nombres;
+        getline(cin, usuario.nombres);
         break;
     case 3:
         cout << "Ingrese la nueva contraseña: ";
-        usuario.contrasenia;
+        getline(cin, usuario.contrasenia);
         break;
     default:
         cout << "Opción no válida.\n";
+        break;
     }
 }
