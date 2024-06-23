@@ -67,7 +67,7 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, 
 							system("cls");
 							break;
 					}
-				}while(opcion4!=4);
+				}while(opcion2!=4);
 
 				break;
 			case 2:

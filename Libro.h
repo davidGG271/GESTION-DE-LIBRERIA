@@ -10,7 +10,6 @@ struct Libro {
     string autor;             // Autor(es)
     int ano_publicacion;      // Año de publicación
     string genero;            // Género
-    string tipo;              // Tipo (por ejemplo, tapa dura, tapa blanda, ebook, etc.)
     string titulo;            // Título
     string isbn;              // ISBN
     string editorial;         // Editorial
@@ -18,7 +17,7 @@ struct Libro {
     string descripcion;       // Descripción
     string fecha_adquisicion; // Fecha de adquisición
     string lenguaje;          // Lenguaje
-    bool estado;
+    int stock;
 
     friend ostream& operator<<(ostream& os, const Libro& libro) {
         os << libro.autor << '\n'
