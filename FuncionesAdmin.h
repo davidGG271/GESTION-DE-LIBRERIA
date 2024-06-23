@@ -20,6 +20,7 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 void agregarLibro(ISBNArbolLibro& arbolLibros);
 void eliminarLibro(ISBNArbolLibro& arbolLibros);
 void mostrarDetalles(ISBNArbolLibro& arbolLibros);
+void eliminarUsuario(ArbolUsuario& arbolUsuarios);
 void tablaUsuarios(ArbolUsuario& arbol);
 string espaciar(int tamanio, int valor);
 void tablaLibros(ISBNArbolLibro& lista);
@@ -90,9 +91,8 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 				break;
 			case 2:
 				system("cls");
-				tablaUsuarios(arbolUsuarios);
-
 				do{
+                tablaUsuarios(arbolUsuarios);
 				cout<<"1. Eliminar Usuario\n";
 				cout<<"2. Editar Usuario\n";
 				cout<<"3. Atras\n";
@@ -102,6 +102,10 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 					switch(opcion3){
 						case 1:
 							//en proceso
+							system("cls");
+							tablaUsuarios(arbolUsuarios);
+							eliminarUsuario(arbolUsuarios);
+							system("cls");
 							break;
 						case 2:
 							//en proceso
@@ -162,8 +166,11 @@ void agregarLibro(ISBNArbolLibro& arbolLibros){
 
 void eliminarLibro(ISBNArbolLibro& arbolLibros){
     string isbn;
-    cout<<"2. Seleccionar libro a eliminar por isbn\n";
+    cout<<"Seleccionar libro a eliminar por isbn(-1 si quiere salir): ";
     cin>>isbn;
+    if(isbn == "-1"){
+        return;
+    }
     arbolLibros.eliminar(isbn);
 }
 
@@ -260,6 +267,16 @@ void mostrarDetalles(ISBNArbolLibro& arbolLibros){
     }else{
         cout<<"isbn no valido";
     }
+}
+
+void eliminarUsuario(ArbolUsuario& arbolUsuarios){
+    string id;
+    cout<<"Seleccionar libro a eliminar por id(-1 si quiere salir): ";
+    cin>>id;
+    if(id =="-1"){
+        return;
+    }
+    arbolUsuarios.eliminar(id);
 }
 
 string obtenerFechaActual() {

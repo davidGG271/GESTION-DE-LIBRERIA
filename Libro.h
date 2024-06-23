@@ -20,11 +20,11 @@ struct Libro {
     int stock;
 
     friend ostream& operator<<(ostream& os, const Libro& libro) {
-        os << libro.autor << '\n'
+        os << libro.isbn << '\n'
+           << libro.autor << '\n'
            << libro.ano_publicacion << '\n'
            << libro.genero << '\n'
            << libro.titulo << '\n'
-           << libro.isbn << '\n'
            << libro.editorial << '\n'
            << libro.num_paginas << '\n'
            << libro.descripcion << '\n'
@@ -35,12 +35,12 @@ struct Libro {
     }
 
     friend istream& operator>>(istream& is, Libro& libro) {
+        getline(is, libro.isbn);
         getline(is, libro.autor);
         is >> libro.ano_publicacion;
         is.ignore();
         getline(is, libro.genero);
         getline(is, libro.titulo);
-        getline(is, libro.isbn);
         getline(is, libro.editorial);
         is >> libro.num_paginas;
         is.ignore();

@@ -11,7 +11,7 @@ struct NodoArbol {
     Libro libro;
     NodoArbol* izquierda;
     NodoArbol* derecha;
-    
+
     friend std::ostream& operator<<(std::ostream& os, const NodoArbol& nodo) {
         os << nodo.libro;
         return os;
@@ -67,7 +67,7 @@ class ISBNArbolLibro {
         int altura() {
             return calcularAltura(raiz);
         }
-        
+
         void guardarLibros() {
             std::ofstream archivo("libros.txt");
             if (archivo.fail()) {
@@ -170,9 +170,9 @@ class ISBNArbolLibro {
 		        return nodo; // Caso base: nodo no encontrado
 		    }
 
-		    if (libro.titulo < nodo->libro.titulo) {
+		    if (libro.isbn < nodo->libro.isbn) {
 		        nodo->izquierda = editarNodo(nodo->izquierda, libro);
-		    } else if (libro.titulo> nodo->libro.titulo) {
+		    } else if (libro.isbn> nodo->libro.isbn) {
 		        nodo->derecha = editarNodo(nodo->derecha, libro);
 		    } else {
 		        // Nodo encontrado, actualizar el libro
@@ -217,18 +217,28 @@ class ISBNArbolLibro {
 				print(nodo->derecha);
 			}
 		}
-		
+
 		static void serializar(std::ostream& os, NodoArbol* nodo) {
             if (nodo == nullptr) {
                 os << "#\n";
             } else {
-                os << nodo->libro; // Utiliza el operador << de Libro para serializar el libro
+                os << nodo->libro.isbn << '\n';
+                os << nodo->libro.autor << '\n';
+                os << nodo->libro.ano_publicacion << '\n';
+                os << nodo->libro.genero << '\n';
+                os << nodo->libro.titulo << '\n';
+                os << nodo->libro.editorial << '\n';
+                os << nodo->libro.num_paginas << '\n';
+                os << nodo->libro.descripcion << '\n';
+                os << nodo->libro.fecha_adquisicion << '\n';
+                os << nodo->libro.lenguaje << '\n';
+                os << nodo->libro.stock << '\n';
                 serializar(os, nodo->izquierda);
                 serializar(os, nodo->derecha);
             }
         }
 
-        static NodoArbol* deserializar(std::istream& is) {
+        static NodoArbol* deserializar(istream& is) {
             std::string isbn;
             std::getline(is, isbn);
 

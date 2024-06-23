@@ -45,14 +45,17 @@ int main(){
 		actual= actual->siguiente;
 	}*/
 	arbolUsuario.cargarUsuarios();
-	arbolUsuario.imprimir();
+	//arbolUsuario.imprimir();
 	cout<<"\n";
 	cout<<"altura: "<<arbolUsuario.getAltura();
 	arbolUsuario.reinsertarBalanceado();
 	cout<<"\naltura: "<<arbolUsuario.getAltura();
 	//listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
 	
+	cout<<"\nantes de la carga";
 	arbolLibrosIsbn.cargarLibros();
+	//cout<<"-----------------a";
+	arbolLibrosIsbn.imprimir();
 	arbolLibrosIsbn.reinsertarBalanceado();
 	//vector<>
 
@@ -175,7 +178,7 @@ void adminIniciarSesion(){
 	cout<<"Ingese su correo: ";
 	cin>>correo;
 	if(correo=="-1"){
-		return;	
+		return;
 	}
 	cout<<"Ingrese su contrase a: ";
 	cin>>contrasenia;
