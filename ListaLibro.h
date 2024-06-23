@@ -12,12 +12,11 @@
 
 using namespace std;
 
-class ListaLibro {
-private:
+struct ListaLibro {
+	public:
     NodoL* inicio;
     NodoL* final;
 
-public:
     ListaLibro() : inicio(nullptr), final(nullptr) {}
 
     void agregar(Libro libro) {
@@ -175,6 +174,16 @@ public:
 			libros.erase(libros.begin());
 			actual= actual->siguiente;
 		}
+	}
+	
+	int getLongitud(){
+			NodoL* actual = inicio;
+			int i = 0;
+			while(actual!=nullptr){
+				actual= actual->siguiente;
+				i++;
+			}
+			return i;
 	}
 
     vector<Libro> filtrarPorCategoria(const string& categoria) {

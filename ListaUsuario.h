@@ -26,7 +26,7 @@ struct NodoU {
 
 struct ListaUsuario
 {
-
+	
 	NodoU *inicio;
 	NodoU *final;
 
