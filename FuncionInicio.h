@@ -9,13 +9,13 @@
 
 using namespace std;
 
-void registrarse(ListaUsuario& lista);
-int asingnarIdUsuario(ListaUsuario lista);
+void registrarse(ArbolUsuario& lista);
+int asingnarIdUsuario(ArbolUsuario lista);
 
 #endif
 
 
-void registrarse(ListaUsuario& listaUsuarios){
+void registrarse(ArbolUsuario& listaUsuarios){
 	Usuario nuevoUsuario;
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cout << "Ingrese nombre del usuario: ";
@@ -31,12 +31,12 @@ void registrarse(ListaUsuario& listaUsuarios){
 	
 	listaUsuarios.agregar(nuevoUsuario);
     cout << "Usuario agregado " << endl;
-    listaUsuarios.guardarUsuarios();
+    //listaUsuarios.guardarUsuarios();
     cout << endl;
 }
 
-int asingnarIdUsuario(ListaUsuario lista){
-	return lista.getLongitud()+1;
+int asingnarIdUsuario(ArbolUsuario lista){
+	return lista.getLongitud() + 1;
 }
 
 

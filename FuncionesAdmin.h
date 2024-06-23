@@ -21,6 +21,7 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, 
 	int opcion;
 	int opcion2;
 	int opcion3;
+	
 	string isbn;
 	do{
 	cout<<"listo\n";
@@ -104,7 +105,7 @@ void paginaPrincipalAdmin(ListaUsuario& listaUsuarios, ListaLibro& listaLibros, 
 				system("cls");
 				break;
 			default:
-				cout<<"Opción no válida, intente nuevamente.\n";
+				cout<<"OpciÃ³n no vÃ¡lida, intente nuevamente.\n";
 				break;
 		}
 
@@ -130,9 +131,9 @@ void tablaUsuarios(ListaUsuario& lista){
 	NodoU* u;
 	string preferencias="";
 
-	cout<<"_________________________________________________________________________________________________________\n";
+	cout<<"___________________________________\n";
 	cout<<"ID                          NOMBRES                   CORREO                       PREFERENCIAS            ";
-	cout<<"_________________________________________________________________________________________________________\n";
+	cout<<"___________________________________\n";
 
 	for(int i = 0; i<lista.getLongitud();i++){
 		u =lista.encontrarUsuario(to_string(i+1));
@@ -157,9 +158,9 @@ void tablaLibros(ListaLibro& lista){
 	NodoL* actual = nullptr;
 	string preferencias="";
 
-	cout<<"_________________________________________________________________________________________________________\n";
-	cout<<"ISBN               TITULO                 AÑO DE PUBLICACION                  FECHA DE ADQUISION            ";
-	cout<<"_________________________________________________________________________________________________________\n";
+	cout<<"___________________________________\n";
+	cout<<"ISBN               TITULO                 AÃ‘O DE PUBLICACION                  FECHA DE ADQUISION            ";
+	cout<<"___________________________________\n";
 
 	actual = lista.inicio;
 	while(actual!=nullptr){
@@ -170,5 +171,3 @@ void tablaLibros(ListaLibro& lista){
 	cout<<endl;
 
 }
-
-

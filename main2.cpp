@@ -36,20 +36,21 @@ ISBNArbolLibro arbolLibrosIsbn;
 
 int main(){
 
-	listaUsuario.cargarUsuarios();
+	/*listaUsuario.cargarUsuarios();
 	listaUsuario.imprimir();
 	cout<<"\n";
 	NodoU* actual = listaUsuario.inicio;
 	while(actual!=nullptr){
 		arbolUsuario.agregar(actual->usuario);
 		actual= actual->siguiente;
-	}
+	}*/
+	arbolUsuario.cargarUsuarios();
 	arbolUsuario.imprimir();
 	cout<<"\n";
 	cout<<"altura: "<<arbolUsuario.getAltura();
 	arbolUsuario.reinsertarBalanceado();
 	cout<<"\naltura: "<<arbolUsuario.getAltura();
-	listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
+	//listaUsuario.sobreescribir(arbolUsuario.getListaOrdenada());
 
 
 	//vector<>
@@ -118,11 +119,11 @@ void mostrarInicio(){
                 inicioSesion();
                 break;
             case 2:
-                registrarse(listaUsuario);
+                registrarse(arbolUsuario);
                 break;
             case 3:
                 cout << "Saliendo...\n";
-                //listaUsuario.guardarUsuarios();
+                arbolUsuario.guardarUsuarios();
                 break;
             default:
                 cout << "Opci n no v lida, intente nuevamente.\n";
@@ -133,7 +134,6 @@ void mostrarInicio(){
 }
 
 void inicioSesion(){
-	bool b = true;
     int opcion;
 	do{
 	cout << "\nElegir tipo de usuario\n";
@@ -191,7 +191,7 @@ void adminIniciarSesion(){
 void usuarioIniciarSesion(){
 	string correo = "";
 	string contrasenia = "";
-	NodoU* encontrado = nullptr;
+	NodoArbolUsuario* encontrado = nullptr;
 
 	cout<<"Ingese su correo: ";
 	cin>>correo;
@@ -201,7 +201,7 @@ void usuarioIniciarSesion(){
 	cout<<"Ingrese su contrase a: ";
 	cin>>contrasenia;
 
-	encontrado = listaUsuario.buscarPorInicio(correo, contrasenia);
+	encontrado = arbolUsuario.verificarInicioSesion(correo, contrasenia);
 	if(encontrado!=nullptr){
 		system("cls");
 		paginaPrincipalUsu(encontrado->usuario);

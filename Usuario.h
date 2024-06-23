@@ -23,7 +23,7 @@ struct Usuario{
         os << usuario.id << '\n'
            << usuario.nombres << '\n'
            << usuario.correo << '\n'
-           << usuario.contrasenia;
+           << usuario.contrasenia << endl;
         return os;
     }
 
