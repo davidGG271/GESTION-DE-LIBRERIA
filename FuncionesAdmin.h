@@ -20,7 +20,6 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 void agregarLibro(ISBNArbolLibro& arbolLibros);
 void eliminarLibro(ISBNArbolLibro& arbolLibros);
 void mostrarDetalles(ISBNArbolLibro& arbolLibros);
-//void editarLibro(ISBNArbolLibro& arbolLibros);
 void tablaUsuarios(ArbolUsuario& arbol);
 string espaciar(int tamanio, int valor);
 void tablaLibros(ISBNArbolLibro& lista);
@@ -262,19 +261,7 @@ void mostrarDetalles(ISBNArbolLibro& arbolLibros){
         cout<<"isbn no valido";
     }
 }
-/*
-void editarLibro(ISBNArbolLibro& arbolLibros){
-    string isbn;
-    do{
-        cout<<"Tipee el ISBN de un libro: ";
-        cin>>isbn;
-        NodoArbol* encontrado = arbolLibros.buscar(isbn);
-        if(encontrado!=nullptr){
 
-        }
-    }while();
-}
-*/
 string obtenerFechaActual() {
     time_t tiempoActual = time(nullptr);
     char buffer[11];
