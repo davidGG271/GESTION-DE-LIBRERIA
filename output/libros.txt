@@ -8,7 +8,7 @@ Gte
 1ff
 2024-06-23
 ingles
-21
+17
 #
 45
 fg
@@ -20,6 +20,6 @@ Pablito
 gg 
 2024-06-23
 ingles
-11
+9
 #
 #

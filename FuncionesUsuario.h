@@ -2,19 +2,22 @@
 #define FUNCIONESUSUARIO_H
 
 #include "Usuario.h"
+#include "Prestamo.h"
 #include "ISBNArbolDeLibros.h"
+#include "ArbolPrestamo.h"
 
 #include <iostream>
 using namespace std;
 
 void paginaPrincipalUsu(Usuario& usuario);
 void seleccionarLibro(Usuario& usuario, ISBNArbolLibro arbolLibrosIsbn);
-void verLibrosSeleccionados(Usuario& usuario);
+void verLibrosSeleccionados(Usuario& usuario, PrestamoArbol& arbolPrestamo, ISBNArbolLibro& arbolLibro);
+void verHistorialPrestamos(Usuario& usuario, PrestamoArbol& arbolPrestamo);
 void gestionarCuenta(Usuario& Usuario);
 
 #endif
 
-void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros){
+void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros, PrestamoArbol& arbolPrestamo){
 	int opcion;
 	cout<<"hola "<<usuario.nombres<<"\n";
 	do{
@@ -36,9 +39,10 @@ void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros){
 				gestionarCuenta(usuario);
 				break;
 			case 3:
+            verHistorialPrestamos(usuario, arbolPrestamo);
 				break;
 			case 4:
-				verLibrosSeleccionados(usuario);
+				verLibrosSeleccionados(usuario, arbolPrestamo, arbolLibros);
 				break;
 			case 5:
 				break;
@@ -103,43 +107,103 @@ void seleccionarLibro(Usuario& usuario, ISBNArbolLibro arbolLibrosIsbn){
                 system("cls");
                 switch(opcion){
                     case 1:
-						encontrado->libro.stock = encontrado->libro.stock-1;
 						usuario.librosSeleccionados.push_back(encontrado->libro);
-                        cout<<"Asignado correctamente!";
+                        cout<<"Asignado correctamente!\n";
+                        system("pause");
+                        system("cls");
                         break;
                     case 0:
                         system("cls");
                         break;
                     default:
+                        system("cls");
                         cout << "Opción inválida." << endl;
                         break;
 				}
 
     }else{
         cout<<"ISBN no valido";
+        system("cls");
     }
 }
 
-void verLibrosSeleccionados(Usuario& usuario){
+void verLibrosSeleccionados(Usuario& usuario, PrestamoArbol& arbolPrestamo, ISBNArbolLibro& arbolLibro){
+    int opc;
+    system("cls");
 	cout << "Libros seleccionados:\n";
     cout<<"____________________________________________________________________________________________________________\n";
 	cout<<"ISBN               TITULO                 AÑO DE PUBLICACION                  FECHA DE ADQUISION            ";
 	cout<<"_____________________________________________________________________________________________________________\n";
 
 	if (usuario.librosSeleccionados.empty()) {
-        cout << "No tiene libros seleccionados.\n";
+        cout << "\nNo tiene libros seleccionados.\n";
+        system("pause");
+        system("cls");
         return;
     } else {
+        Prestamo prestamo;
         // Iterar sobre cada usuario en el vector
         for (const auto& libro : usuario.librosSeleccionados) {
-
             // Imprimir cada usuario con sus detalles
             cout << libro.isbn << espaciar(2, 16)
                  << libro.titulo << espaciar(libro.titulo.size(), 26)
                  << libro.ano_publicacion << espaciar(to_string(libro.ano_publicacion).size(), 28)
                  << libro.fecha_adquisicion << "\n";
         }
+        cout << "Generar Prestamo?\n";
+        cout << "[1] Si\n";
+        cout << "[2] No\n";
+        cin >> opc;
+        if(opc == 1){
+            prestamo.id = generateID();
+            prestamo.idUsuario = usuario.id;
+            prestamo.fechaSalida = obtenerFechaActual();
+            
+            for (const auto& libro : usuario.librosSeleccionados) {
+                arbolLibro.buscar(libro.isbn)->libro.stock --;
+                prestamo.isbnLibros.push_back(libro.isbn);
+            }
+            arbolPrestamo.insertar(prestamo);
+            usuario.librosSeleccionados.clear();
+            cout << "Prestamo generado exitosamente.\n";
+            system("pause");
+            system("cls");
+        }
+        else{
+            prestamo.isbnLibros.clear();
+            system("cls");
+        }
     }
+}
+
+void verHistorialPrestamos(Usuario& usuario, PrestamoArbol& arbolPrestamo) {
+    vector<Prestamo> prestamos = arbolPrestamo.obtenerPrestamosPorUsuario(usuario.id);
+    system("cls");
+    if (prestamos.empty()) {
+        cout << "No tiene historial de prestamos.\n";
+        system("pause");
+        system("cls");
+        return;
+    }
+
+    cout << "Historial de prestamos:\n";
+    cout << "______________________________________________________________________________________\n";
+    cout << "ID       FECHA SALIDA     FECHA DEVOLUCIÓN      ISBN(s)\n";
+    cout << "______________________________________________________________________________________\n";
+
+    for (const auto& prestamo : prestamos) {
+        cout << prestamo.id << "    "
+             << prestamo.fechaSalida << "      "
+             << (prestamo.fechaDevolucion.empty() ? "No devuelto" : prestamo.fechaDevolucion) << "      ";
+
+        for (const auto& isbn : prestamo.isbnLibros) {
+            cout << isbn << " ";
+        }
+
+        cout << "\n\n";
+    }
+    system("pause");
+    system("cls");
 }
 
 void gestionarCuenta(Usuario& usuario) {
@@ -165,6 +229,7 @@ void gestionarCuenta(Usuario& usuario) {
         getline(cin, usuario.contrasenia);
         break;
     default:
+        system("cls");
         cout << "Opción no válida.\n";
         break;
     }
