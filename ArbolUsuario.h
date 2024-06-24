@@ -38,7 +38,7 @@ struct ArbolUsuario {
         raiz = agregarNodo(raiz, usuario);
     }
 
-    bool buscar(std::string id) {
+    NodoArbolUsuario* buscar(string id) {
         return buscarRec(raiz, id);
     }
 
@@ -134,16 +134,18 @@ private:
         }
         return verificarRec(nodo->derecha, correo, contrasenia);
     }
-    
 
-    bool buscarRec(NodoArbolUsuario* nodo, std::string& id) {
+
+    NodoArbolUsuario* buscarRec(NodoArbolUsuario* nodo, string id) {
         if (nodo == nullptr) {
-            return false;
+            return nullptr;
         }
+
         if (nodo->usuario.id == id) {
-            return true;
+            return nodo;
         }
-        if (comparar(nodo->usuario.id, id)) {
+
+        if (id < nodo->usuario.id) {
             return buscarRec(nodo->izquierda, id);
         } else {
             return buscarRec(nodo->derecha, id);

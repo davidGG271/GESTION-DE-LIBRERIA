@@ -9,6 +9,7 @@
 
 #include "ISBNArbolDeLibros.h"
 #include "ArbolUsuario.h"
+#include "PrestamoArbol.h"
 
 #include <ctime>
 #include <string>
@@ -16,23 +17,26 @@
 
 using namespace std;
 
-void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin);
+void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, PrestamoArbol& arbolPrestamos, Administrador& admin);
 void agregarLibro(ISBNArbolLibro& arbolLibros);
 void eliminarLibro(ISBNArbolLibro& arbolLibros);
 void mostrarDetalles(ISBNArbolLibro& arbolLibros);
 void eliminarUsuario(ArbolUsuario& arbolUsuarios);
+void verDetallesPrestamos(PrestamoArbol& arbolPrestamos, ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros);
 void tablaUsuarios(ArbolUsuario& arbol);
 string espaciar(int tamanio, int valor);
 void tablaLibros(ISBNArbolLibro& lista);
 string obtenerFechaActual();
+void tablaPrestamos(PrestamoArbol& arbol);
 
 #endif
 
-void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, Administrador& admin){
+void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros, PrestamoArbol& arbolPrestamos, Administrador& admin){
         int opcion;
         int opcion2;
         int opcion3;
         int opcion4;
+
 
 	do{
 	cout<<"listo\n";
@@ -50,8 +54,9 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 
 		switch(opcion){
 			case 1:
-				system("cls");
+
 				do{
+					system("cls");
                     tablaLibros(arbolLibros);
 					cout<<"1. Agregar Libro\n";
 					cout<<"2. Seleccionar libro\n";
@@ -91,8 +96,9 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 
 				break;
 			case 2:
-				system("cls");
+
 				do{
+				system("cls");
                 tablaUsuarios(arbolUsuarios);
 				cout<<"1. Eliminar Usuario\n";
 				cout<<"2. Atras\n";
@@ -117,10 +123,12 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 
 				break;
 			case 3:
-			    system("cls");
-			    do{
+				do{
+			        system("cls");
+			        tablaPrestamos(arbolPrestamos);
+		        	verDetallesPrestamos(arbolPrestamos, arbolUsuarios, arbolLibros);
+		    	}while(opcion!=4);
 
-			    }while(opcion!=4);
 				break;
 			case 4:
 				cout << "Saliendo...\n";
@@ -283,6 +291,29 @@ void eliminarUsuario(ArbolUsuario& arbolUsuarios){
     arbolUsuarios.eliminar(id);
 }
 
+void verDetallesPrestamos(PrestamoArbol& arbolPrestamos, ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibros){
+    string id;
+    NodoArbolPrestamo* encontrado;
+    NodoArbol* nodoLibro;
+        system("cls");
+        tablaPrestamos(arbolPrestamos);
+        cout<<"Escribe un ID: ";
+        cin>>id;
+        encontrado = arbolPrestamos.buscar(id);
+        if(encontrado!=nullptr){
+            cout<<"Id: "<<encontrado->prestamo.id;
+            cout<<"Usuario: "<<arbolUsuarios.buscar(encontrado->prestamo.id)<<" - "<<encontrado->prestamo.idUsuario<<endl;
+            cout<<"Fecha de salida: "<<encontrado->prestamo.fechaSalida<<endl;
+            cout<<"Fecha de Devolucion: "<<encontrado->prestamo.fechaDevolucion<<endl;
+            cout<<"Libros prestados:"<<endl;
+
+            for(const auto& isbn : encontrado->prestamo.isbnLibros){
+                    nodoLibro = arbolLibros.buscar(isbn);
+                cout<<nodoLibro->libro.titulo<<" - "<<nodoLibro->libro.isbn;
+            }
+        }
+}
+
 string obtenerFechaActual() {
     time_t tiempoActual = time(nullptr);
     char buffer[11];
@@ -363,3 +394,26 @@ void tablaLibros(ISBNArbolLibro& arbol){
 	cout<<endl;
 
 }
+
+void tablaPrestamos(PrestamoArbol& arbol){
+	system("color f9");
+	vector<Prestamo> prestamos = arbol.getListaOrdenada();
+
+    cout<<"____________________________________________________________________________________________________________\n";
+	cout<<"ID                ID DE USUARIO                 FECHA DE DEVOLUCION                  FECHA DE SALIDA         ";
+	cout<<"_____________________________________________________________________________________________________________\n";
+
+	if(prestamos.empty()){
+		cout<< "No hay librod registrados. \n";
+	}else{
+		for(const auto& prestamo : prestamos){
+
+			cout << prestamo.id << espaciar(2,16)
+                 << prestamo.idUsuario << espaciar(prestamo.idUsuario.size(),26)
+                 << prestamo.fechaDevolucion << espaciar(prestamo.fechaDevolucion.size(),26)
+                 << prestamo.fechaSalida << espaciar(prestamo.fechaSalida.size(),28);
+		}
+	}
+	cout<<endl;
+}
+

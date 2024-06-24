@@ -1,6 +1,5 @@
-#ifndef ARBOLPRESTAMO_H_INCLUDED
-#define ARBOLPRESTAMO_H_INCLUDED
-
+#ifndef ARBOLPRESTAMO_H	
+#define ARBOLPRESTAMO_H
 #include "Prestamo.h"
 #include <iostream>
 #include <vector>
@@ -24,7 +23,7 @@ struct NodoArbolPrestamo {
     }
 };
 
-class PrestamoArbol {
+struct PrestamoArbol {
 private:
     NodoArbolPrestamo* raiz;
 
