@@ -5,6 +5,7 @@
 #include "NodoLibro.h"
 #include "ArbolUsuario.h"
 #include "ISBNArbolDeLibros.h"
+#include "ArbolPrestamo.h"
 
 #include "FuncionesAdmin.h"
 #include "FuncionInicio.h"
@@ -32,12 +33,13 @@ ListaLibro listaLibro;
 
 ArbolUsuario arbolUsuario;
 ISBNArbolLibro arbolLibrosIsbn;
-
+PrestamoArbol arbolPrestamo;
 
 int main(){
 
 
 	arbolUsuario.cargarUsuarios();
+	arbolPrestamo.cargarPrestamos();
 	//arbolUsuario.imprimir();
 	cout<<"\n";
 	cout<<"altura: "<<arbolUsuario.getAltura();
@@ -84,6 +86,7 @@ void mostrarInicio(){
                 cout << "Saliendo...\n";
                 arbolUsuario.guardarUsuarios();
                 arbolLibrosIsbn.guardarLibros();
+				arbolPrestamo.guardarPrestamos();
                 break;
             default:
                 cout << "Opcion no valida, intente nuevamente.\n";
@@ -164,7 +167,7 @@ void usuarioIniciarSesion(){
 	encontrado = arbolUsuario.verificarInicioSesion(correo, contrasenia);
 	if(encontrado!=nullptr){
 		system("cls");
-		paginaPrincipalUsu(encontrado->usuario, arbolLibrosIsbn);
+		paginaPrincipalUsu(encontrado->usuario, arbolLibrosIsbn, arbolPrestamo);
 		return;
 	}
 	system("cls");

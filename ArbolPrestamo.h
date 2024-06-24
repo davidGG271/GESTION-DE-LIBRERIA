@@ -87,6 +87,12 @@ public:
         archivo >> *this;
     }
 
+    vector<Prestamo> obtenerPrestamosPorUsuario(const string& idUsuario) {
+        vector<Prestamo> prestamos;
+        obtenerPrestamosPorUsuarioRec(raiz, idUsuario, prestamos);
+        return prestamos;
+    }
+
     friend ostream& operator<<(ostream& os, const PrestamoArbol& arbol) {
         serializar(os, arbol.raiz);
         return os;
@@ -212,6 +218,16 @@ private:
             print(nodo->izquierda);
             cout << nodo->prestamo.id << "\t" << nodo->prestamo.fechaSalida << "\n";
             print(nodo->derecha);
+        }
+    }
+
+    void obtenerPrestamosPorUsuarioRec(NodoArbolPrestamo* nodo, const string& idUsuario, vector<Prestamo>& prestamos) {
+        if (nodo != nullptr) {
+            obtenerPrestamosPorUsuarioRec(nodo->izquierda, idUsuario, prestamos);
+            if (nodo->prestamo.idUsuario == idUsuario) {
+                prestamos.push_back(nodo->prestamo);
+            }
+            obtenerPrestamosPorUsuarioRec(nodo->derecha, idUsuario, prestamos);
         }
     }
 

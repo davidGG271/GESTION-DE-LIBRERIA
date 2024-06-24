@@ -47,24 +47,12 @@ int asingnarIdUsuario(ArbolUsuario lista){
 
 
 string generateID() {
-    // Obtener la fecha y hora actual hasta milisegundos
-    auto now = chrono::system_clock::now();
-    auto millis = chrono::duration_cast<chrono::milliseconds>(now.time_since_epoch()) % 1000;
-    time_t now_time = chrono::system_clock::to_time_t(now);
+ auto now = std::chrono::system_clock::now();
+    auto milliseconds_since_epoch = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
 
-    // Obtener la estructura tm local usando localtime_r o localtime según el entorno
-    tm buf;
-#ifdef _WIN32
-    localtime_s(&buf, &now_time);  // En Windows
-#else
-    localtime_r(&now_time, &buf);  // En sistemas POSIX-compatibles
-#endif
-
-    // Convertir a una cadena en el formato YYYYMMDDHHMMSSmmm
-    stringstream ss;
-    ss << put_time(&buf, "%Y%m%d%H%M%S") << setw(3) << setfill('0') << millis.count();
+    // Convertir el tiempo en milisegundos a un string
+    std::stringstream ss;
+    ss << milliseconds_since_epoch;
 
     return ss.str();
 }
-
-
