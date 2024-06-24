@@ -4,7 +4,7 @@
 #include "Usuario.h"
 #include "Prestamo.h"
 #include "ISBNArbolDeLibros.h"
-#include "ArbolPrestamo.h"
+#include "PrestamoArbol.h"
 
 #include <iostream>
 using namespace std;

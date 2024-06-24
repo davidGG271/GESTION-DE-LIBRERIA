@@ -5,7 +5,7 @@
 #include "NodoLibro.h"
 #include "ArbolUsuario.h"
 #include "ISBNArbolDeLibros.h"
-#include "ArbolPrestamo.h"
+#include "PrestamoArbol.h"
 
 #include "FuncionesAdmin.h"
 #include "FuncionInicio.h"
@@ -51,6 +51,7 @@ int main(){
 	//cout<<"-----------------a";
 	arbolLibrosIsbn.imprimir();
 	arbolLibrosIsbn.reinsertarBalanceado();
+
 
 
 	admin.id = 1;
@@ -143,7 +144,7 @@ void adminIniciarSesion(){
 
 	if(admin.correo == correo && admin.contrasenia == contrasenia){
 		system("cls");
-		paginaPrincipalAdmin(arbolUsuario, arbolLibrosIsbn, admin);
+		paginaPrincipalAdmin(arbolUsuario, arbolLibrosIsbn, arbolPrestamo, admin);
 		return;
 	}
 	system("cls");

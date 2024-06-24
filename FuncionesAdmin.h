@@ -123,12 +123,11 @@ void paginaPrincipalAdmin(ArbolUsuario& arbolUsuarios, ISBNArbolLibro& arbolLibr
 
 				break;
 			case 3:
-				do{
+
 			        system("cls");
 			        tablaPrestamos(arbolPrestamos);
 		        	verDetallesPrestamos(arbolPrestamos, arbolUsuarios, arbolLibros);
-		    	}while(opcion!=4);
-
+					system("cls");
 				break;
 			case 4:
 				cout << "Saliendo...\n";
@@ -297,12 +296,15 @@ void verDetallesPrestamos(PrestamoArbol& arbolPrestamos, ArbolUsuario& arbolUsua
     NodoArbol* nodoLibro;
         system("cls");
         tablaPrestamos(arbolPrestamos);
-        cout<<"Escribe un ID: ";
+        cout<<"Escribe un ID(-1 para salir) ";
         cin>>id;
+        if(id=="-1"){
+        	return;
+		}
         encontrado = arbolPrestamos.buscar(id);
         if(encontrado!=nullptr){
-            cout<<"Id: "<<encontrado->prestamo.id;
-            cout<<"Usuario: "<<arbolUsuarios.buscar(encontrado->prestamo.id)<<" - "<<encontrado->prestamo.idUsuario<<endl;
+            cout<<"Id: "<<encontrado->prestamo.id<<endl;
+            cout<<"Usuario: "<<arbolUsuarios.buscar(encontrado->prestamo.idUsuario)->usuario.nombres<<" - "<<encontrado->prestamo.idUsuario<<endl;
             cout<<"Fecha de salida: "<<encontrado->prestamo.fechaSalida<<endl;
             cout<<"Fecha de Devolucion: "<<encontrado->prestamo.fechaDevolucion<<endl;
             cout<<"Libros prestados:"<<endl;
@@ -311,6 +313,7 @@ void verDetallesPrestamos(PrestamoArbol& arbolPrestamos, ArbolUsuario& arbolUsua
                     nodoLibro = arbolLibros.buscar(isbn);
                 cout<<nodoLibro->libro.titulo<<" - "<<nodoLibro->libro.isbn;
             }
+            cout<<endl
         }
 }
 
