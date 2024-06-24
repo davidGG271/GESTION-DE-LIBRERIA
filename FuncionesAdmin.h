@@ -2,16 +2,14 @@
 #define FUNCIONESADMIN_H
 
 #include "Usuario.h"
-#include "ListaUsuario.h"
-#include "ListaLibro.h"
 #include "Administrador.h"
-
 #include "ISBNArbolDeLibros.h"
 #include "ArbolUsuario.h"
 #include "PrestamoArbol.h"
 
 #include <ctime>
 #include <string>
+#include <limits>
 #include <iostream>
 
 using namespace std;
@@ -28,7 +26,7 @@ void tablaLibros(ISBNArbolLibro &lista);
 string obtenerFechaActual();
 void tablaPrestamos(PrestamoArbol &arbol);
 
-#endif
+
 
 void paginaPrincipalAdmin(ArbolUsuario &arbolUsuarios, ISBNArbolLibro &arbolLibros, PrestamoArbol &arbolPrestamos, Administrador &admin)
 {
@@ -70,14 +68,11 @@ void paginaPrincipalAdmin(ArbolUsuario &arbolUsuarios, ISBNArbolLibro &arbolLibr
                     system("cls");
                     agregarLibro(arbolLibros);
 
-                    // en proceso
                     break;
                 case 2:
                     system("cls");
                     tablaLibros(arbolLibros);
                     mostrarDetalles(arbolLibros);
-                    // cin>>isbn;
-                    // en espera
 
                     break;
                 case 3:
@@ -109,7 +104,6 @@ void paginaPrincipalAdmin(ArbolUsuario &arbolUsuarios, ISBNArbolLibro &arbolLibr
                 switch (opcion3)
                 {
                 case 1:
-                    // en proceso
                     system("cls");
                     tablaUsuarios(arbolUsuarios);
                     eliminarUsuario(arbolUsuarios);
@@ -339,7 +333,7 @@ string obtenerFechaActual()
 {
     time_t tiempoActual = time(nullptr);
     char buffer[11];
-    strftime(buffer, sizeof(buffer), "%Y-%m-%d", localtime(&tiempoActual));
+    strftime(buffer, sizeof(buffer), "%d-%m-%Y", localtime(&tiempoActual));
     return string(buffer);
 }
 
@@ -406,7 +400,7 @@ void tablaLibros(ISBNArbolLibro &arbol)
     vector<Libro> libros = arbol.getListaOrdenada();
 
     cout << "____________________________________________________________________________________________________________\n";
-    cout << "ISBN               TITULO                 AÑO DE PUBLICACION                  FECHA DE ADQUISION            ";
+    cout << "ISBN               TITULO                 ANIO DE PUBLICACION                  FECHA DE ADQUISION            " << endl;
     cout << "_____________________________________________________________________________________________________________\n";
 
     if (libros.empty())
@@ -436,7 +430,7 @@ void tablaPrestamos(PrestamoArbol &arbol)
     vector<Prestamo> prestamos = arbol.getListaOrdenada();
 
     cout << "____________________________________________________________________________________________________________\n";
-    cout << "ID                ID DE USUARIO                 FECHA DE DEVOLUCION                  FECHA DE SALIDA         ";
+    cout << "ID                ID DE USUARIO                 FECHA DE DEVOLUCION                  FECHA DE SALIDA         " << endl;
     cout << "_____________________________________________________________________________________________________________\n";
 
     if (prestamos.empty())
@@ -456,3 +450,4 @@ void tablaPrestamos(PrestamoArbol &arbol)
     }
     cout << endl;
 }
+#endif

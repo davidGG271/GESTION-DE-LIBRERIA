@@ -1,18 +1,11 @@
 #include "Libro.h"
 #include "Usuario.h"
-#include "ListaUsuario.h"
-#include "ListaLibro.h"
-#include "NodoLibro.h"
 #include "ArbolUsuario.h"
 #include "ISBNArbolDeLibros.h"
 #include "PrestamoArbol.h"
-
-#include "FuncionesAdmin.h"
-#include "FuncionInicio.h"
 #include "FuncionesUsuario.h"
 #include "Administrador.h"
 #include "Cifrado.h"
-
 #include <string>
 #include <iostream>
 #include <conio.h>
@@ -27,15 +20,11 @@ string inputPassword(const string& prompt);
 void registrarse(ArbolUsuario& arbolUsuario);
 
 Administrador admin;
-ListaUsuario listaUsuario;
-ListaLibro listaLibro;
-
 ArbolUsuario arbolUsuario;
 ISBNArbolLibro arbolLibrosIsbn;
 PrestamoArbol arbolPrestamo;
 
 int main(){
-
 
 	arbolUsuario.cargarUsuarios();
 	arbolUsuario.reinsertarBalanceado();
@@ -48,7 +37,7 @@ int main(){
 
 	//Datos administrador
 	admin.id = 1;
-	admin.nombre = "henry";
+	admin.nombre = "henry"; 
 	admin.correo = "henry";
 	admin.contrasenia = "abc";
 
@@ -85,7 +74,7 @@ void mostrarInicio(){
     cout << "1. Iniciar Sesion\n";
     cout << "2. Registrarse\n";
     cout << "3. Salir\n";
-    cout << "Seleccione una opci n: ";
+    cout << "Seleccione una opcion: ";
 
     cin >> opcion;
 
@@ -174,7 +163,7 @@ void usuarioIniciarSesion(){
     if (correo == "-1") {
         return;
     }
-    contrasenia = inputPassword("Ingrese su contrase�a: ");
+    contrasenia = inputPassword("Ingrese su contrasenia: ");
 
     string contraseniaCifrada = cifrarContrasena(contrasenia); // Cifrar la contrase�a ingresada una sola vez
     cout << "Contrase�a ingresada cifrada: " << contraseniaCifrada << endl; // Mensaje de depuraci�n

@@ -4,8 +4,12 @@
 #include "Usuario.h"
 #include "Prestamo.h"
 #include "ISBNArbolDeLibros.h"
+#include "FuncionesAdmin.h"
 #include "PrestamoArbol.h"
+#include "FuncionInicio.h"
 
+#include <sstream>
+#include <ctime>
 #include <iostream>
 using namespace std;
 
@@ -82,7 +86,7 @@ void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros, PrestamoAr
 				cout<<"Opci�n no v�lida, intente nuevamente.\n";
 				break;
 		}
-	}while(opcion!=6);
+	}while(opcion!=5);
 }
 
 void seleccionarLibro(Usuario& usuario, ISBNArbolLibro arbolLibrosIsbn){
@@ -90,7 +94,7 @@ void seleccionarLibro(Usuario& usuario, ISBNArbolLibro arbolLibrosIsbn){
 	vector<Libro> libros = arbolLibrosIsbn.getListaOrdenada();
 
 	cout<<"____________________________________________________________________________________________________________\n";
-	cout<<"ISBN               TITULO                 AÑO DE PUBLICACION                  FECHA DE ADQUISION            ";
+	cout<<"ISBN               TITULO                 ANIO DE PUBLICACION                  FECHA DE ADQUISION            " << endl;
 	cout<<"_____________________________________________________________________________________________________________\n";
 
      if (libros.empty()) {
@@ -100,9 +104,9 @@ void seleccionarLibro(Usuario& usuario, ISBNArbolLibro arbolLibrosIsbn){
         for (const auto& libro : libros) {
 
             // Imprimir cada usuario con sus detalles
-            cout << libro.isbn << espaciar(2, 16)
-                 << libro.titulo << espaciar(libro.titulo.size(), 26)
-                 << libro.ano_publicacion << espaciar(to_string(libro.ano_publicacion).size(), 28)
+            cout << libro.isbn << espaciar(2, 20)
+                 << libro.titulo << espaciar(libro.titulo.size(), 30)
+                 << libro.ano_publicacion << espaciar(to_string(libro.ano_publicacion).size(), 30)
                  << libro.fecha_adquisicion << "\n";
         }
     }
@@ -159,7 +163,7 @@ void verLibrosSeleccionados(Usuario& usuario, PrestamoArbol& arbolPrestamo, ISBN
     system("cls");
 	cout << "Libros seleccionados:\n";
     cout<<"____________________________________________________________________________________________________________\n";
-	cout<<"ISBN               TITULO                 AÑO DE PUBLICACION                  FECHA DE ADQUISION            ";
+	cout<<"ISBN               TITULO                 ANIO DE PUBLICACION                  FECHA DE ADQUISION            " << endl;
 	cout<<"_____________________________________________________________________________________________________________\n";
 
 	if (usuario.librosSeleccionados.empty()) {
@@ -216,13 +220,13 @@ void verHistorialPrestamos(Usuario& usuario, PrestamoArbol& arbolPrestamo) {
 
     cout << "Historial de prestamos:\n";
     cout << "______________________________________________________________________________________\n";
-    cout << "ID       FECHA SALIDA     FECHA DEVOLUCIÓN      ISBN(s)\n";
+    cout << "ID                FECHA SALIDA           FECHA DEVOLUCION        ISBN(s)" << endl;
     cout << "______________________________________________________________________________________\n";
 
     for (const auto& prestamo : prestamos) {
-        cout << prestamo.id << "    "
-             << prestamo.fechaSalida << "      "
-             << prestamo.fechaDevolucion << "      ";
+        cout << prestamo.id << "       "
+             << prestamo.fechaSalida << "            "
+             << prestamo.fechaDevolucion << "              ";
 
         for (const auto& isbn : prestamo.isbnLibros) {
             cout << isbn << " ";

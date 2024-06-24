@@ -75,10 +75,6 @@ struct ArbolUsuario {
         return alturaRec(raiz);
     }
 
-    int getLongitud(){
-        return contarNodosRec(raiz);
-    }
-
     void guardarUsuarios() {
         std::ofstream archivo("usuarios.txt");
         if (archivo.fail()) {
@@ -130,20 +126,15 @@ private:
 				return nullptr;
 			}
 
-			// Mensajes de depuraci�n para verificar el flujo de la l�gica
-			cout << "Verificando usuario con correo: " << nodo->usuario.correo << endl;
-			cout << "Contrase�a almacenada cifrada: " << nodo->usuario.contrasenia << endl;
-			cout << "Contrase�a ingresada cifrada: " << contraseniaCifrada << endl;
-
 			// Verificar si el correo coincide
 			if (nodo->usuario.correo == correo) {
 				cout << "Correo coincide" << endl;
-				// Usar la funci�n de comparaci�n para verificar la contrase�a cifrada
+				// Usar la funcion de comparacion para verificar la contrasena cifrada
 				if (compararContrasenas(nodo->usuario.contrasenia, contraseniaCifrada)) {
-					cout << "Contrase�a cifrada coincide" << endl;
-					return nodo; // Usuario y contrase�a coinciden
+					cout << "Contrasena cifrada coincide" << endl;
+					return nodo; // Usuario y contrasena coinciden
 				} else {
-					cout << "Contrase�a cifrada no coincide" << endl;
+					cout << "Contrasena cifrada no coincide" << endl;
 				}
 			}
 
@@ -248,13 +239,6 @@ private:
         int alturaIzquierda = alturaRec(nodo->izquierda);
         int alturaDerecha = alturaRec(nodo->derecha);
         return 1 + std::max(alturaIzquierda, alturaDerecha);
-    }
-
-    int contarNodosRec(NodoArbolUsuario* nodo) {
-        if (nodo == nullptr) {
-            return 0;
-        }
-        return 1 + contarNodosRec(nodo->izquierda) + contarNodosRec(nodo->derecha);
     }
 
     void print(NodoArbolUsuario* nodo) {
