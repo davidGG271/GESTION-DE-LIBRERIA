@@ -8,17 +8,11 @@
 
 using namespace std;
 
-struct Preferencia {
-    string tipo;
-    int contador;
-};
-
 struct Usuario{
     string id;
 	string nombres;
 	string correo;
 	string contrasenia;
-	vector<Preferencia> preferencias;
     vector<Libro> librosSeleccionados;
 
 	 friend ostream& operator<<(ostream& os, const Usuario& usuario) {

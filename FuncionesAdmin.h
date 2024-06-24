@@ -356,9 +356,9 @@ void tablaUsuarios(ArbolUsuario &arbol)
     system("color f9");
     vector<Usuario> usuarios = arbol.getListaOrdenada();
 
-    cout << "_______________________________________________________________________________________________________________\n";
-    cout << "ID              NOMBRES                  CORREO                        PREFERENCIAS\n";
-    cout << "_______________________________________________________________________________________________________________\n";
+    cout << "___________________________________________________\n";
+    cout << "ID              NOMBRES                  CORREO       " << endl;
+    cout << "___________________________________________________\n";
 
     // Verificar si hay usuarios para mostrar
     if (usuarios.empty())
@@ -370,24 +370,10 @@ void tablaUsuarios(ArbolUsuario &arbol)
         // Iterar sobre cada usuario en el vector
         for (const auto &usuario : usuarios)
         {
-            string preferencias = "[ ";
-
-            // Construir la lista de preferencias
-            for (size_t i = 0; i < usuario.preferencias.size(); ++i)
-            {
-                preferencias += usuario.preferencias[i].tipo;
-                if (i != usuario.preferencias.size() - 1)
-                {
-                    preferencias += ", ";
-                }
-            }
-            preferencias += " ]";
-
             // Imprimir cada usuario con sus detalles
             cout << usuario.id << espaciar(2, 16)
                  << usuario.nombres << espaciar(usuario.nombres.size(), 26)
-                 << usuario.correo << espaciar(usuario.correo.size(), 28)
-                 << preferencias << "\n";
+                 << usuario.correo << espaciar(usuario.correo.size(), 28) << "\n";
         }
     }
 

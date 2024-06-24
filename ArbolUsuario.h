@@ -280,7 +280,7 @@ private:
     std::getline(is, correo);
     std::getline(is, contrasenia);
 
-    Usuario usuario{id, nombres, correo, contrasenia, {}, {}};
+    Usuario usuario{id, nombres, correo, contrasenia, {}};
 
     size_t numLibros;
     is >> numLibros;
