@@ -14,8 +14,38 @@ void seleccionarLibro(Usuario& usuario, ISBNArbolLibro arbolLibrosIsbn);
 void verLibrosSeleccionados(Usuario& usuario, PrestamoArbol& arbolPrestamo, ISBNArbolLibro& arbolLibro);
 void verHistorialPrestamos(Usuario& usuario, PrestamoArbol& arbolPrestamo);
 void gestionarCuenta(Usuario& Usuario);
+string sumarSemana(const string& fecha);
 
 #endif
+
+string sumarSemana(const string& fecha) {
+    // Extraer día, mes y año de la cadena
+    int dia, mes, anio;
+    sscanf(fecha.c_str(), "%d-%d-%d", &dia, &mes, &anio);
+    
+    // Ajustar para struct tm
+    mes -= 1; // Mes en struct tm es 0-11
+    anio -= 1900; // Año en struct tm comienza desde 1900
+
+    // Crear struct tm
+    tm fechaTm = {};
+    fechaTm.tm_mday = dia;
+    fechaTm.tm_mon = mes;
+    fechaTm.tm_year = anio;
+
+    // Sumar 7 días
+    time_t fechaTimeT = mktime(&fechaTm); // Convertir tm a time_t
+    fechaTimeT += 7 * 24 * 60 * 60; // Sumar una semana en segundos
+
+    // Convertir de vuelta a struct tm
+    tm* nuevaFechaTm = localtime(&fechaTimeT);
+
+    // Convertir struct tm de vuelta a string
+    char buffer[11];
+    strftime(buffer, sizeof(buffer), "%d-%m-%Y", nuevaFechaTm);
+
+    return string(buffer);
+}
 
 void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros, PrestamoArbol& arbolPrestamo){
 	int opcion;
@@ -26,8 +56,7 @@ void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros, PrestamoAr
 		cout<<"2. Gestionar Cuenta\n";
 		cout<<"3. Tu Historial de prestamos\n";
 		cout<<"4. Ver libros seleccionados\n";
-		cout<<"5. Ver recomendados\n";
-		cout<<"6. Cerrar sesion\n";
+		cout<<"5. Cerrar sesion\n";
 
 		cout<<"Ingrese la funcion a realizar: ";
 		cin>>opcion;
@@ -45,8 +74,6 @@ void paginaPrincipalUsu(Usuario& usuario, ISBNArbolLibro arbolLibros, PrestamoAr
 				verLibrosSeleccionados(usuario, arbolPrestamo, arbolLibros);
 				break;
 			case 5:
-				break;
-			case 6:
 				cout << "Saliendo...\n";
 				system("cls");
 				break;
@@ -158,6 +185,7 @@ void verLibrosSeleccionados(Usuario& usuario, PrestamoArbol& arbolPrestamo, ISBN
             prestamo.id = generateID();
             prestamo.idUsuario = usuario.id;
             prestamo.fechaSalida = obtenerFechaActual();
+            prestamo.fechaDevolucion = sumarSemana(obtenerFechaActual());
             
             for (const auto& libro : usuario.librosSeleccionados) {
                 arbolLibro.buscar(libro.isbn)->libro.stock --;
@@ -194,7 +222,7 @@ void verHistorialPrestamos(Usuario& usuario, PrestamoArbol& arbolPrestamo) {
     for (const auto& prestamo : prestamos) {
         cout << prestamo.id << "    "
              << prestamo.fechaSalida << "      "
-             << (prestamo.fechaDevolucion.empty() ? "No devuelto" : prestamo.fechaDevolucion) << "      ";
+             << prestamo.fechaDevolucion << "      ";
 
         for (const auto& isbn : prestamo.isbnLibros) {
             cout << isbn << " ";

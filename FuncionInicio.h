@@ -7,6 +7,7 @@
 #include "ListaUsuario.h"
 #include <limits>
 #include "ArbolUsuario.h"
+#include "Cifrado.h"
 
 #include <chrono>
 #include <sstream>
@@ -21,8 +22,8 @@ string generateID();
 
 
 void registrarse(ArbolUsuario& listaUsuarios){
-	Usuario nuevoUsuario;
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    Usuario nuevoUsuario;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "Ingrese nombre del usuario: ";
     getline(cin, nuevoUsuario.nombres);
 
@@ -30,13 +31,16 @@ void registrarse(ArbolUsuario& listaUsuarios){
     getline(cin, nuevoUsuario.correo);
 
     cout << "Ingrese contrasenia del usuario: ";
-    getline(cin, nuevoUsuario.contrasenia);
+    string contrasenia;
+    getline(cin, contrasenia);
 
-	nuevoUsuario.id = generateID();
+    nuevoUsuario.contrasenia = cifrarContrasena(contrasenia); // Cifrar la contrase�a antes de guardarla
+    cout << "Contrase�a cifrada: " << nuevoUsuario.contrasenia << endl; // Mensaje de depuraci�n
 
-	listaUsuarios.agregar(nuevoUsuario);
-    cout << "Usuario agregado " << endl;
-    //listaUsuarios.guardarUsuarios();
+    nuevoUsuario.id = generateID();
+
+    listaUsuarios.agregar(nuevoUsuario);
+    cout << "Usuario agregado" << endl;
     cout << endl;
 }
 

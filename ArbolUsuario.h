@@ -13,6 +13,10 @@ bool comparar(const T& a, const T& b) {
     return a > b; // Cambia aqu� seg�n el tipo de comparaci�n que necesites
 }
 
+bool compararContrasenas(const string& almacenada, const string& ingresada) {
+	return almacenada == ingresada;
+}
+
 struct NodoArbolUsuario {
     Usuario usuario;
     NodoArbolUsuario* izquierda;
@@ -121,19 +125,37 @@ private:
         return nodo;
     }
 
-    NodoArbolUsuario* verificarRec(NodoArbolUsuario* nodo, const string& correo, const string& contrasenia) {
-        if (nodo == nullptr) {
-            return nullptr;
-        }
-        if (nodo->usuario.correo == correo && nodo->usuario.contrasenia == contrasenia) {
-            return nodo;
-        }
-        NodoArbolUsuario* izquierda = verificarRec(nodo->izquierda, correo, contrasenia);
-        if (izquierda != nullptr) {
-            return izquierda;
-        }
-        return verificarRec(nodo->derecha, correo, contrasenia);
-    }
+    NodoArbolUsuario* verificarRec(NodoArbolUsuario* nodo, const string& correo, const string& contraseniaCifrada) {
+			if (nodo == nullptr) {
+				return nullptr;
+			}
+
+			// Mensajes de depuraci�n para verificar el flujo de la l�gica
+			cout << "Verificando usuario con correo: " << nodo->usuario.correo << endl;
+			cout << "Contrase�a almacenada cifrada: " << nodo->usuario.contrasenia << endl;
+			cout << "Contrase�a ingresada cifrada: " << contraseniaCifrada << endl;
+
+			// Verificar si el correo coincide
+			if (nodo->usuario.correo == correo) {
+				cout << "Correo coincide" << endl;
+				// Usar la funci�n de comparaci�n para verificar la contrase�a cifrada
+				if (compararContrasenas(nodo->usuario.contrasenia, contraseniaCifrada)) {
+					cout << "Contrase�a cifrada coincide" << endl;
+					return nodo; // Usuario y contrase�a coinciden
+				} else {
+					cout << "Contrase�a cifrada no coincide" << endl;
+				}
+			}
+
+			// Continuar buscando en el sub�rbol izquierdo
+			NodoArbolUsuario* izquierda = verificarRec(nodo->izquierda, correo, contraseniaCifrada);
+			if (izquierda != nullptr) {
+				return izquierda;
+			}
+
+			// Continuar buscando en el sub�rbol derecho
+			return verificarRec(nodo->derecha, correo, contraseniaCifrada);
+		}
 
 
     NodoArbolUsuario* buscarRec(NodoArbolUsuario* nodo, string id) {
